@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "rootDir": "./src",
+    "lib": ["es6"],
+    "rootDir": "./", /* "./src" */
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./build",
@@ -10,6 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleDetection": "force" /* OR 'export {}' at the top of each file that uses a variable name that is used in another file i.e. 'app' used in app.ts AND listen.ts */
   }
 }
