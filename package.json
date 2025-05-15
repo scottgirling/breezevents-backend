@@ -2,14 +2,36 @@
   "name": "events-platform-be",
   "version": "1.0.0",
   "description": "Backend to Events Platform",
-  "main": "index.js",
+  "main": "listen.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setup-dbs": "psql -f ./db/setup.sql",
+    "seed": "node ./db/seeds/run-seed.js",
+    "seed-prod": "NODE_ENV=production npm run seed",
+    "test": "",
+    "start": "node listen.js",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottgirling/events-platform-be"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottgirling/events-platform-be/issues"
+  },
+  "homepage": "https://github.com/scottgirling/events-platform-be#readme",
   "devDependencies": {
+    "@types/node": "^22.15.18",
+    "husky": "^9.1.7",
+    "pg-format": "^1.0.4",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
   }
 }
