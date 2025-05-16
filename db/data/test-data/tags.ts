@@ -1,4 +1,11 @@
-module.exports = [
+export interface Tag {
+  name: string;
+  slug: string;
+  created_at: string;
+  last_updated_at: string;
+}
+
+export const tags: Tag[] = [
   {
     "name": "Technology",
     "slug": "technology",
@@ -35,4 +42,4 @@ module.exports = [
     "created_at": "2025-03-01T12:45:00Z",
     "last_updated_at": "2025-05-01T11:30:00Z"
   }
-]  
+]
