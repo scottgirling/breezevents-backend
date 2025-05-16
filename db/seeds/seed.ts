@@ -1,11 +1,13 @@
 const db = require("../connection");
 const format = require("pg-format");
+import { EventTag } from "../data/test-data/event_tags";
+import { Event } from "../data/test-data/events";
+import { Tag } from "../data/test-data/tags";
+import { UserEvent } from "../data/test-data/user_events";
+import { User } from "../data/test-data/users";
+import { Venue } from "../data/test-data/venues";
 
-/*
-{ eventTagData, eventData, tagData, userData, venueData } : { eventTagData: Array<Object>, eventData: Array<Object>, tagData: Array<Object>, userEventData: Array<Object>, userData: Array<Object>, venueData: Array<Object> }
- */
-
-const seed = () => {
+const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venueData } : { eventTagData: EventTag[], eventData: Event[], tagData: Tag[], userEventData: UserEvent[], userData: User[], venueData: Venue[] }) => {
     return db.query("DROP TABLE IF EXISTS event_tags")
     .then(() => {
         return db.query("DROP TABLE IF EXISTS user_events");
@@ -54,7 +56,7 @@ const seed = () => {
             user_id SERIAL PRIMARY KEY,
             name VARCHAR NOT NULL,
             email VARCHAR NOT NULL,
-            password VARCHAR NOT NULL,
+            password_hash VARCHAR NOT NULL,
             bio TEXT,
             avatar_url VARCHAR,
             role VARCHAR NOT NULL,
@@ -106,6 +108,43 @@ const seed = () => {
         )`)
 
         return Promise.all([userEventsTablePromise, eventTagsTablePromise]);
+    })
+    .then(() => {
+        const insertTagsQueryString = format(
+            `INSERT INTO tags (name, slug, created_at, last_updated_at) VALUES %L`, tagData.map(({ name, slug, created_at, last_updated_at }) => [name, slug, created_at, last_updated_at])
+        )
+        const tagsPromise = db.query(insertTagsQueryString);
+        
+        const insertVenuesQueryString = format(
+            `INSERT INTO venues (venue_name, venue_type, location, capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, created_at, last_updated_at) VALUES %L`, venueData.map(({ venue_name, venue_type, location, capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, created_at, last_updated_at }) => [venue_name, venue_type, location, capacity, (`{${facilities}}`), contact_email, contact_phone, website_url, (`{${event_types}}`), (`{${accessibility_features}}`), parking_info, (`{${image_gallery}}`), nearby_transport, created_at, last_updated_at])
+        )
+        const venuesPromise = db.query(insertVenuesQueryString);
+
+        const insertUsersQueryString = format(
+            `INSERT INTO users (name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url }) => [ name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url])
+        )
+        const usersPromise = db.query(insertUsersQueryString);
+
+        return Promise.all([tagsPromise, venuesPromise, usersPromise]);
+    })
+    .then(() => {
+        const insertEventsQueryString = format(
+            `INSERT INTO events (title, slug, event_overview, description, start_time, end_time, timezone, venue_id, is_online, host_id, event_type, capacity, attendees_count, is_free, price, event_image_url, is_published, created_at, last_updated_at) VALUES %L`, eventData.map(({ title, slug, event_overview, description, start_time, end_time, timezone, venue_id, is_online, host_id, event_type, capacity, attendees_count, is_free, price, event_image_url, is_published, created_at, last_updated_at }) => [title, slug, event_overview, description, start_time, end_time, timezone, venue_id, is_online, host_id, event_type, capacity, attendees_count, is_free, price, event_image_url, is_published, created_at, last_updated_at])
+        )
+        return db.query(insertEventsQueryString);
+    })
+    .then(() => {
+        const insertEventTagsQueryString = format(
+            `INSERT INTO event_tags (event_id, tag_id) VALUES %L`, eventTagData.map(({ event_id, tag_id }) => [event_id, tag_id])
+        )
+        const eventTagsPromise = db.query(insertEventTagsQueryString);
+
+        const insertUserEventsQueryString = format(
+            `INSERT INTO user_events (user_id, event_id) VALUES %L`, userEventData.map(({ user_id, event_id }) => [user_id, event_id])
+        )
+        const userEventsPromise = db.query(insertUserEventsQueryString);
+
+        return Promise.all([eventTagsPromise, userEventsPromise]);
     })
 }
 
