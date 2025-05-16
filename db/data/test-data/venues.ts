@@ -1,4 +1,22 @@
-module.exports = [
+export interface Venue {
+  venue_name: string;
+  venue_type: string;
+  location: string;
+  capacity: number;
+  facilities: string[];
+  contact_email: string;
+  contact_phone: string;
+  website_url: string;
+  event_types: string[];
+  accessibility_features: string[];
+  parking_info: string;
+  image_gallery: string[];
+  nearby_transport: string;
+  created_at: string;
+  last_updated_at: string;
+}
+
+export const venues: Venue[] = [
   {
     "venue_name": "ExCeL London",
     "venue_type": "Convention Centre",
@@ -50,4 +68,4 @@ module.exports = [
     "created_at": "2025-04-20T07:15:00Z",
     "last_updated_at": "2025-05-09T11:20:00Z"
   }
-]  
+]

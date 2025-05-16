@@ -1,4 +1,9 @@
-module.exports = [
+export interface EventTag {
+  event_id: number;
+  tag_id: number;
+}
+
+export const eventTags: EventTag[] = [
   { "event_id": 1, "tag_id": 1 },
   { "event_id": 1, "tag_id": 2 },
   { "event_id": 1, "tag_id": 4 },

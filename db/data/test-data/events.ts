@@ -1,4 +1,26 @@
-module.exports = [
+export interface Event {
+  title: string;
+  slug: string;
+  event_overview: string;
+  description: string;
+  start_time: string;
+  end_time: string;
+  timezone: string;
+  venue_id: number;
+  is_online: boolean;
+  host_id: number;
+  event_type: string;
+  capacity: number;
+  attendees_count: number;
+  is_free: boolean;
+  price: number;
+  event_image_url: string;
+  is_published: boolean;
+  created_at: string;
+  last_updated_at: string;
+}
+
+export const events: Event[] = [
   {
     "title": "UK Tech Expo 2025",
     "slug": "uk-tech-expo-2025",
@@ -15,7 +37,7 @@ module.exports = [
     "attendees_count": 545,
     "is_free": false,
     "price": 180.00,
-    "image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+    "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
     "is_published": true,
     "created_at": "2025-05-10T10:00:00Z",
     "last_updated_at": "2025-05-12T14:00:00Z"
@@ -36,7 +58,7 @@ module.exports = [
     "attendees_count": 460,
     "is_free": true,
     "price": 0.00,
-    "image_url": "https://example.co.uk/images/greenfutureforum.jpg",
+    "event_image_url": "https://example.co.uk/images/greenfutureforum.jpg",
     "is_published": true,
     "created_at": "2025-05-05T08:15:00Z",
     "last_updated_at": "2025-05-10T11:30:00Z"
@@ -57,7 +79,7 @@ module.exports = [
     "attendees_count": 775,
     "is_free": false,
     "price": 150.00,
-    "image_url": "https://example.co.uk/images/digitalhealth2025.jpg",
+    "event_image_url": "https://example.co.uk/images/digitalhealth2025.jpg",
     "is_published": false,
     "created_at": "2025-05-01T09:00:00Z",
     "last_updated_at": "2025-05-13T13:00:00Z"
@@ -78,7 +100,7 @@ module.exports = [
     "attendees_count": 520,
     "is_free": false,
     "price": 95.00,
-    "image_url": "https://example.co.uk/images/ukgamedevcon.jpg",
+    "event_image_url": "https://example.co.uk/images/ukgamedevcon.jpg",
     "is_published": true,
     "created_at": "2025-05-03T12:30:00Z",
     "last_updated_at": "2025-05-11T09:15:00Z"
@@ -99,7 +121,7 @@ module.exports = [
     "attendees_count": 370,
     "is_free": true,
     "price": 0.00,
-    "image_url": "https://example.co.uk/images/womenintech2025.jpg",
+    "event_image_url": "https://example.co.uk/images/womenintech2025.jpg",
     "is_published": true,
     "created_at": "2025-04-28T11:45:00Z",
     "last_updated_at": "2025-05-12T16:30:00Z"

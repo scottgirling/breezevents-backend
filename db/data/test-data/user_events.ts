@@ -1,4 +1,9 @@
-module.exports = [
+export interface UserEvent {
+  user_id: number;
+  event_id: number;
+}
+
+export const userEvents: UserEvent[] = [
 	{
 		"user_id": 1,   // Alice Thompson (attendee)
 		"event_id": 1   // UK Tech Expo 2025 (attending)

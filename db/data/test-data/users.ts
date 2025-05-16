@@ -1,4 +1,15 @@
-module.exports = [
+export interface User {
+  name: string;
+  email: string;
+  password_hash: string;
+  role: string;
+  created_at: string;
+  last_updated_at: string;
+  bio: string;
+  avatar_url: string;
+}
+
+export const users: User[] = [
   {
     "name": "Alice Thompson",
     "email": "alice.thompson@example.com",
@@ -7,7 +18,7 @@ module.exports = [
     "created_at": "2025-05-01T09:00:00Z",
     "last_updated_at": "2025-05-10T10:00:00Z",
     "bio": "Tech enthusiast. Always looking for new innovative solutions.",
-    "avatar": "https://example.com/avatars/alice.jpg"
+    "avatar_url": "https://example.com/avatars/alice.jpg"
   },
   {
     "name": "Ben Ahmed",
@@ -17,7 +28,7 @@ module.exports = [
     "created_at": "2025-04-18T14:30:00Z",
     "last_updated_at": "2025-05-02T13:00:00Z",
     "bio": "Event organizer and tech community advocate.",
-    "avatar": "https://example.com/avatars/ben.jpg"
+    "avatar_url": "https://example.com/avatars/ben.jpg"
   },
   {
     "name": "Daniel O'Brien",
@@ -27,7 +38,7 @@ module.exports = [
     "created_at": "2025-05-04T10:00:00Z",
     "last_updated_at": "2025-05-11T12:00:00Z",
     "bio": "Digital marketer and entrepreneur with an interest in AI.",
-    "avatar": "https://example.com/avatars/daniel.jpg"
+    "avatar_url": "https://example.com/avatars/daniel.jpg"
   },
   {
     "name": "Ella Kapoor",
@@ -37,7 +48,7 @@ module.exports = [
     "created_at": "2025-04-28T11:45:00Z",
     "last_updated_at": "2025-05-06T15:00:00Z",
     "bio": "Founder of StartUp Innovators. Organizing events for aspiring entrepreneurs.",
-    "avatar": "https://example.com/avatars/ella.jpg"
+    "avatar_url": "https://example.com/avatars/ella.jpg"
   }
 
 ]
