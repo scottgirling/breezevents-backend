@@ -39,8 +39,8 @@ export const events: Event[] = [
     "price": 180.00,
     "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
     "is_published": true,
-    "created_at": "2025-05-10T10:00:00Z",
-    "last_updated_at": "2025-05-12T14:00:00Z"
+    "created_at": "2025-05-10T10:00:00.000Z",
+    "last_updated_at": "2025-05-12T14:00:00.000Z"
   },
   {
     "title": "Green Future Forum",
@@ -60,8 +60,8 @@ export const events: Event[] = [
     "price": 0.00,
     "event_image_url": "https://example.co.uk/images/greenfutureforum.jpg",
     "is_published": true,
-    "created_at": "2025-05-05T08:15:00Z",
-    "last_updated_at": "2025-05-10T11:30:00Z"
+    "created_at": "2025-05-05T08:15:00.000Z",
+    "last_updated_at": "2025-05-10T11:30:00.000Z"
   },
   {
     "title": "Digital Health Summit",
@@ -81,8 +81,8 @@ export const events: Event[] = [
     "price": 150.00,
     "event_image_url": "https://example.co.uk/images/digitalhealth2025.jpg",
     "is_published": false,
-    "created_at": "2025-05-01T09:00:00Z",
-    "last_updated_at": "2025-05-13T13:00:00Z"
+    "created_at": "2025-05-01T09:00:00.000Z",
+    "last_updated_at": "2025-05-13T13:00:00.000Z"
   },
   {
     "title": "UK Game Developers Conference",
@@ -102,8 +102,8 @@ export const events: Event[] = [
     "price": 95.00,
     "event_image_url": "https://example.co.uk/images/ukgamedevcon.jpg",
     "is_published": true,
-    "created_at": "2025-05-03T12:30:00Z",
-    "last_updated_at": "2025-05-11T09:15:00Z"
+    "created_at": "2025-05-03T12:30:00.000Z",
+    "last_updated_at": "2025-05-11T09:15:00.000Z"
   },
   {
     "title": "Women in Tech Leadership Forum",
@@ -123,7 +123,7 @@ export const events: Event[] = [
     "price": 0.00,
     "event_image_url": "https://example.co.uk/images/womenintech2025.jpg",
     "is_published": true,
-    "created_at": "2025-04-28T11:45:00Z",
-    "last_updated_at": "2025-05-12T16:30:00Z"
+    "created_at": "2025-04-28T11:45:00.000Z",
+    "last_updated_at": "2025-05-12T16:30:00.000Z"
   }
 ]  
