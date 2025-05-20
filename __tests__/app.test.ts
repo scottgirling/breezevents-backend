@@ -130,3 +130,20 @@ describe("GET /api/tags", () => {
         });
     });
 });
+
+describe("GET /api/user-events", () => {
+    test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
+        return request(app)
+        .get("/api/user-events")
+        .expect(200)
+        .then(({ body: { userEvents } } : { body: CustomResponse }) => {
+            expect(Array.isArray(userEvents)).toBe(true);
+            expect(userEvents.length).toBe(6);
+            userEvents.forEach((userEvent) => {
+                expect(userEvent).toHaveProperty("user_id", expect.any(Number));
+                expect(userEvent).toHaveProperty("event_id", expect.any(Number));
+                expect(Object.entries(userEvent).length).toBe(2);
+            });
+        });
+    });
+});

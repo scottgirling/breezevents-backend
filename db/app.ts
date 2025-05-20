@@ -5,6 +5,7 @@ const getEndpoints = require ("../controllers/getEndpoints");
 const getEvents = require("../controllers/getEvents");
 const getEventById = require("../controllers/getEventById");
 const getTags = require("../controllers/getTags");
+const getUserEvents = require("../controllers/getUserEvents");
 
 app.use(express.json());
 
@@ -15,6 +16,8 @@ app.get("/api/events", getEvents);
 app.get("/api/events/:event_id", getEventById);
 
 app.use("/api/tags", getTags);
+
+app.use("/api/user-events", getUserEvents);
 
 app.use((error: any, request: any, response: any, next: any) => {
     if (error.status && error.msg) {
