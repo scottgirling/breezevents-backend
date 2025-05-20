@@ -194,5 +194,36 @@
                 "last_updated_at": "2025-05-01T11:30:00Z"
             }
         ]
+    },
+    "GET /api/user-events": {
+        "description": "serves an array of user event objects illustrating the events that each user has attended",
+        "queries": [],
+        "examplePath": "/api/user-events",
+        "exampleResponse": [
+            {
+                "user_id": 1,
+                "event_id": 1
+            },
+            {
+                "user_id": 1,
+                "event_id": 2
+            },
+            {
+                "user_id": 1,
+                "event_id": 5
+            },
+            {
+                "user_id": 3,
+                "event_id": 1
+            },
+            {
+                "user_id": 3,
+                "event_id": 2
+            },
+            {
+                "user_id": 3,
+                "event_id": 4
+            }
+        ]
     }
 }
