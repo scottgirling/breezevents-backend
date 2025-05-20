@@ -3,11 +3,28 @@ const app = express();
 
 const getEndpoints = require ("../controllers/getEndpoints");
 const getEvents = require("../controllers/getEvents");
+const getEventById = require("../controllers/getEventById");
 
 app.use(express.json());
 
 app.get("/api", getEndpoints);
 
 app.get("/api/events", getEvents);
+
+app.get("/api/events/:event_id", getEventById);
+
+app.use((error: any, request: any, response: any, next: any) => {
+    if (error.status && error.msg) {
+        response.status(error.status).send({ msg: error.msg });
+    }
+    next(error);
+});
+
+app.use((error: any, request: any, response: any, next: any) => {
+    if (error.code === "22P02") {
+        response.status(400).send({ msg: "Invalid data type." });
+    }
+    next(error);
+})
 
 module.exports = app;
