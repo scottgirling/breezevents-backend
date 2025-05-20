@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { CustomResponse } from './interfaces/types';
 
 const endpoints = require(`${__dirname}/../../endpoints.json`);
