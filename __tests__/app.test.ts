@@ -110,3 +110,23 @@ describe("GET /api/events/:event_id", () => {
         });
     });
 });
+
+describe("GET /api/tags", () => {
+    test("200: responds with an array of tag objects, with the appropriate properties and status code", () => {
+        return request(app)
+        .get("/api/tags")
+        .expect(200)
+        .then(({ body: { tags } } : { body: CustomResponse }) => {
+            expect(Array.isArray(tags)).toBe(true);
+            expect(tags.length).toBe(6);
+            tags.forEach((tag) => {
+                expect(tag).toHaveProperty("tag_id", expect.any(Number));
+                expect(tag).toHaveProperty("name", expect.any(String));
+                expect(tag).toHaveProperty("slug", expect.any(String));
+                expect(tag).toHaveProperty("created_at", expect.any(String));
+                expect(tag).toHaveProperty("last_updated_at", expect.any(String));
+                expect(Object.entries(tag).length).toBe(5);
+            });
+        });
+    });
+});

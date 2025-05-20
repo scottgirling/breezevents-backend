@@ -6,6 +6,7 @@ export interface CustomResponse extends Response {
     events: Array<object>;
     event: object;
     msg: string;
+    tags: Array<object>
 }
 
 export interface CustomRequest extends Request {

@@ -145,5 +145,54 @@
             "created_at": "2025-05-10T10:00:00Z",
             "last_updated_at": "2025-05-12T14:00:00Z"
         }
+    },
+    "GET /api/tags": {
+        "description": "serves an array of tag objects",
+        "queries": [],
+        "examplePath": "/api/tags",
+        "exampleResponse": [
+            {
+                "tag_id": 1,
+                "name": "Technology",
+                "slug": "technology",
+                "created_at": "2025-01-15T10:00:00Z",
+                "last_updated_at": "2025-05-01T12:00:00Z"
+            },
+            {
+                "tag_id": 2,
+                "name": "Innovation",
+                "slug": "innovation",
+                "created_at": "2025-01-20T11:00:00Z",
+                "last_updated_at": "2025-04-25T09:00:00Z"
+            },
+            {
+                "tag_id": 3,
+                "name": "Startups",
+                "slug": "startups",
+                "created_at": "2025-02-05T09:30:00Z",
+                "last_updated_at": "2025-05-02T08:00:00Z"
+            },
+            {
+                "tag_id": 4,
+                "name": "AI",
+                "slug": "ai",
+                "created_at": "2025-03-10T14:00:00Z",
+                "last_updated_at": "2025-05-01T10:00:00Z"
+            },
+            {
+                "tag_id": 5,
+                "name": "Networking",
+                "slug": "networking",
+                "created_at": "2025-01-30T16:15:00Z",
+                "last_updated_at": "2025-04-20T13:45:00Z"
+            },
+            {
+                "tag_id": 6,
+                "name": "Fintech",
+                "slug": "fintech",
+                "created_at": "2025-03-01T12:45:00Z",
+                "last_updated_at": "2025-05-01T11:30:00Z"
+            }
+        ]
     }
 }
