@@ -12,4 +12,5 @@ export interface CustomResponse extends Response {
 
 export interface CustomRequest extends Request {
     params: any;
+    query: any;
 }
