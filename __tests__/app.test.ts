@@ -221,6 +221,70 @@ describe("GET /api/events", () => {
             });
         });
     });
+    describe("Pagination", () => {
+        describe("limit", () => {
+            test("200: responds with an array of event objects according to the 'limit' query, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events?limit=4")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    expect(events.length).toBe(4);
+                });
+            });
+            test("200: responds with an array of event objects according to a default 'limit' value (12) when one is not specifically selected, as well as an appriopriate status code", () => {
+                return request(app)
+                .get("/api/events")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    expect(events.length).toBe(5);
+                });
+            });
+            test("400: responds with an appropriate status code and error message when passed an invalid 'limit' query", () => {
+                return request(app)
+                .get("/api/events?limit=three")
+                .expect(400)
+                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    expect(msg).toBe("Invalid data type.");
+                });
+            });
+        });
+        describe("p", () => {
+            test("200: responds with an array of event objects according to the 'p' query, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events?sort_by=price&limit=2&p=3")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    const output: Array<any> = events;
+                    expect(output.length).toBe(1);
+                    expect(output[0].price).toBe(180.00);
+                });
+            });
+            test("200: responds with an array of event objects according to a default 'p' value (1) when one is not specifically selected, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events?limit=3")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    expect(events.length).toBe(3);
+                });
+            });
+            test("400: responds with an appropriate status code and error message when passed an invalid 'p' query", () => {
+                return request(app)
+                .get("/api/events?p=seventeen")
+                .expect(400)
+                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    expect(msg).toBe("Invalid data type.");
+                });
+            });
+            test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'p' query", () => {
+                return request(app)
+                .get("/api/events?tag=fintech&p=77")
+                .expect(404)
+                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    expect(msg).toBe("Page does not exist.");
+                });
+            });
+        });
+    });
 });
 
 describe("GET /api/events/:event_id", () => {
