@@ -4,7 +4,7 @@
     },
     "GET /api/events": {
         "description": "serves an array of event objects",
-        "queries": [],
+        "queries": ["sort_by", "order", "tag", "is_online", "is_free"],
         "examplePath": "/api/events",
         "exampleResponse": [
             {
@@ -116,6 +116,51 @@
                 "is_published": true,
                 "created_at": "2025-04-28T11:45:00Z",
                 "last_updated_at": "2025-05-12T16:30:00Z"
+            }
+        ],
+        "examplePathWithQueries": "/api/events?tag=technology&is_online=true",
+        "exampleResponseWithQueries": [
+            {
+                "title": "Women in Tech Leadership Forum",
+                "slug": "women-in-tech-leadership-2025",
+                "event_overview": "Empowering women in technology through leadership talks, mentorship, and networking.",
+                "description": "Join tech leaders, rising stars, and allies at this one-day event focused on advancing women in technology. Hear keynote stories, join panel discussions, and connect with mentors from top UK companies. A day of inspiration, learning, and career elevation.",
+                "start_time": "2025-07-18T09:00:00Z",
+                "end_time": "2025-07-18T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 2,
+                "is_online": true,
+                "host_id": 4,
+                "event_type": "forum",
+                "capacity": 400,
+                "attendees_count": 370,
+                "is_free": true,
+                "price": 0.00,
+                "event_image_url": "https://example.co.uk/images/womenintech2025.jpg",
+                "is_published": true,
+                "created_at": "2025-04-28T11:45:00.000Z",
+                "last_updated_at": "2025-05-12T16:30:00.000Z"
+            },
+            {
+                "title": "Digital Health Summit",
+                "slug": "digital-health-summit-2025",
+                "event_overview": "A summit focused on healthcare innovation, telemedicine, and healthtech startups.",
+                "description": "Explore the future of digital healthcare at the Digital Health Summit 2025. Engage with thought leaders on topics such as wearable tech, AI diagnostics, patient data management, and personalized medicine. Featuring startup pitches, investor panels, and case studies from NHS pilots.",
+                "start_time": "2025-11-05T10:00:00Z",
+                "end_time": "2025-11-06T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 3,
+                "is_online": true,
+                "host_id": 4,
+                "event_type": "summit",
+                "capacity": 1000,
+                "attendees_count": 775,
+                "is_free": false,
+                "price": 150.00,
+                "event_image_url": "https://example.co.uk/images/digitalhealth2025.jpg",
+                "is_published": false,
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "last_updated_at": "2025-05-13T13:00:00.000Z"
             }
         ]
     },

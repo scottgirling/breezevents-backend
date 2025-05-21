@@ -59,6 +59,168 @@ describe("GET /api/events", () => {
             });
         });
     });
+    describe("Queries", () => {
+        describe("sort_by", () => {
+            test("200: responds with a sorted array of event objects by a valid column with an appropriate status code", () => {
+                return request(app)
+                .get("/api/events?sort_by=price")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    const output: Array<any> = events;
+                    expect(output[0].price).toBe(0.00);
+                    expect(output[1].price).toBe(0.00);
+                    expect(output[2].price).toBe(95.00);
+                    expect(output[3].price).toBe(150.00);
+                    expect(output[4].price).toBe(180.00);
+                });
+            });
+            test("200: responds with a sorted array of event objects by the default column ('start_time') when one is not specifically selected, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    const output: Array<any> = events;
+                    expect(output[0].start_time).toBe("2025-07-18T09:00:00Z");
+                    expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[3].start_time).toBe("2025-10-14T09:00:00Z");
+                    expect(output[4].start_time).toBe("2025-11-05T10:00:00Z");
+                });
+            });
+            test("400: responds with an appropriate status code and error message when sorted by an invalid, non-existent column", () => {
+                return request(app)
+                .get("/api/events?sort_by=title")
+                .expect(400)
+                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    expect(msg).toBe("Invalid 'Sort By' or 'Order' query.");
+                });
+            });
+        });
+        describe("order", () => {
+            test("200: responds with an ordered array of event objects according to the 'order' query, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events?order=desc")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    const output: Array<any> = events;
+                    expect(output[0].start_time).toBe("2025-11-05T10:00:00Z");
+                    expect(output[1].start_time).toBe("2025-10-14T09:00:00Z");
+                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[3].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[4].start_time).toBe("2025-07-18T09:00:00Z");
+                });
+            });
+            test("200: responds with an ordered array of event objects by a default value ('asc') when one is not specifically selected, as well as an appropriate status code", () => {
+                return request(app)
+                .get("/api/events")
+                .expect(200)
+                .then(({ body: { events } } : { body: CustomResponse }) => {
+                    const output: Array<any> = events;
+                    expect(output[0].start_time).toBe("2025-07-18T09:00:00Z");
+                    expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[3].start_time).toBe("2025-10-14T09:00:00Z");
+                    expect(output[4].start_time).toBe("2025-11-05T10:00:00Z");
+                });
+            });
+            test("400: responds with an appropriate status code and error message when ordered by an invalid, non-existent value", () => {
+                return request(app)
+                .get("/api/events?order=high-to-low")
+                .expect(400)
+                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    expect(msg).toBe("Invalid 'Sort By' or 'Order' query.");
+                });
+            });
+        });
+        describe("filters", () => {
+            describe("tag", () => {
+                test("200: responds with a filtered array of event objects according to the 'tag' query, as well as an appropriate status code", () => {
+                    return request(app)
+                    .get("/api/events?tag=ai")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        expect(events.length).toBe(2);
+                    });
+                });
+                test("200: responds with an empty array and an appropriate status code when passed a valid 'tag' query but not events currently exist on it", () => {
+                    return request(app)
+                    .get("/api/events?tag=healthtech")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        expect(events.length).toBe(0);
+                    });
+                });
+                test("404: responds with an appropriate status code and error message when passed a non-existent 'tag' query", () => {
+                    return request(app)
+                    .get("/api/events?tag=edtech")
+                    .expect(404)
+                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                        expect(msg).toBe("Tag does not exist.");
+                    });
+                });
+            })
+            describe("is_online", () => {
+                test("200: responds with a filtered array of event objects according to the 'is_online' query, as well as an appropriate status code", () => {
+                    return request(app)
+                    .get("/api/events?is_online=true")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        const output: Array<any> = events;
+                        expect(output.length).toBe(2);
+                        output.forEach((event) => {
+                            expect(event.is_online).toBe(true);
+                        });
+                    });
+                });
+                test("200: responds with a filtered array of event objects when multiple filters are provided, as well as an appropriate status code", () => {
+                    return request(app)
+                    .get("/api/events?tag=innovation&is_online=true")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        expect(events.length).toBe(1);
+                    });
+                });
+                test("400: responds with an appropriate status code and error message when passed an invalid 'is_online' query", () => {
+                    return request(app)
+                    .get("/api/events?tag=innovation&is_online=maybe")
+                    .expect(400)
+                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                        expect(msg).toBe("Invalid data type.");
+                    });
+                });
+            });
+            describe("is_free", () => {
+                test("200: responds with a filtered array of event objects according to the 'is_free' query, as well as an appropriate status code", () => {
+                    return request(app)
+                    .get("/api/events?is_free=true")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        const output: Array<any> = events;
+                        expect(output.length).toBe(2);
+                        output.forEach((event) => {
+                            expect(event.is_free).toBe(true);
+                        });
+                    });
+                });
+                test("200: responds with a filtered array of event objects when multiple filters are provided, as well as an appropriate status code", () => {
+                    return request(app)
+                    .get("/api/events?tag=technology&is_online=true&is_free=true")
+                    .expect(200)
+                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                        expect(events.length).toBe(1);
+                    });
+                });
+                test("400: responds with an appropriate status code and error message when passed an invalid 'is_free' query", () => {
+                    return request(app)
+                    .get("/api/events?is_free=absolutely!")
+                    .expect(400)
+                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                        expect(msg).toBe("Invalid data type.");
+                    });
+                });
+            });
+        });
+    });
 });
 
 describe("GET /api/events/:event_id", () => {
@@ -118,7 +280,7 @@ describe("GET /api/tags", () => {
         .expect(200)
         .then(({ body: { tags } } : { body: CustomResponse }) => {
             expect(Array.isArray(tags)).toBe(true);
-            expect(tags.length).toBe(6);
+            expect(tags.length).toBe(7);
             tags.forEach((tag) => {
                 expect(tag).toHaveProperty("tag_id", expect.any(Number));
                 expect(tag).toHaveProperty("name", expect.any(String));

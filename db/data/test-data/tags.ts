@@ -41,5 +41,11 @@ export const tags: Tag[] = [
     "slug": "fintech",
     "created_at": "2025-03-01T12:45:00Z",
     "last_updated_at": "2025-05-01T11:30:00Z"
+  },
+  {
+    "name": "HealthTech",
+    "slug": "healthtech",
+    "created_at": "2025-02-15T09:20:00Z",
+    "last_updated_at": "2025-04-20T14:10:00Z"
   }
 ]
