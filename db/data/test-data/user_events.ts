@@ -9,7 +9,7 @@ export const userEvents: UserEvent[] = [
 		"event_id": 1   // UK Tech Expo 2025 (attending)
 	},
 	{
-		"user_id": 1,   // Alice Thompson (host)
+		"user_id": 1,   // Alice Thompson (attendee)
 		"event_id": 2   // Green Future Forum (hosting)
 	},
 	{
