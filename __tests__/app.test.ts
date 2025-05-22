@@ -351,7 +351,7 @@ describe("GET /api/events/host/:username", () => {
         .get("/api/events/host/scottgirling")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
-            expect(msg).toBe("Host not found.");
+            expect(msg).toBe("Profile not found.");
         });
     });
 });
@@ -406,19 +406,53 @@ describe("GET /api/users/:username", () => {
     });
 });
 
-describe("GET /api/user-events", () => {
+describe("GET /api/:username/events", () => {
     test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/user-events/1")
+        .get("/api/alice_thompson123/events")
         .expect(200)
-        .then(({ body: { userEvents } } : { body: CustomResponse }) => {
-            expect(Array.isArray(userEvents)).toBe(true);
-            expect(userEvents.length).toBe(3);
-            userEvents.forEach((userEvent) => {
-                expect(userEvent).toHaveProperty("user_id", expect.any(Number));
-                expect(userEvent).toHaveProperty("event_id", expect.any(Number));
-                expect(Object.entries(userEvent).length).toBe(2);
+        .then(({ body: { events } } : { body: CustomResponse }) => {
+            expect(Array.isArray(events)).toBe(true);
+            expect(events.length).toBe(3);
+            events.forEach((event) => {
+                expect(event).toHaveProperty("event_id", expect.any(Number));
+                expect(event).toHaveProperty("title", expect.any(String));
+                expect(event).toHaveProperty("slug", expect.any(String));
+                expect(event).toHaveProperty("event_overview", expect.any(String));
+                expect(event).toHaveProperty("description", expect.any(String));
+                expect(event).toHaveProperty("start_time", expect.any(String));
+                expect(event).toHaveProperty("end_time", expect.any(String));
+                expect(event).toHaveProperty("timezone", expect.any(String));
+                expect(event).toHaveProperty("venue_id", expect.any(Number));
+                expect(event).toHaveProperty("is_online", expect.any(Boolean));
+                expect(event).toHaveProperty("host_id", expect.any(Number));
+                expect(event).toHaveProperty("event_type", expect.any(String));
+                expect(event).toHaveProperty("capacity", expect.any(Number));
+                expect(event).toHaveProperty("attendees_count", expect.any(Number));
+                expect(event).toHaveProperty("is_free", expect.any(Boolean));
+                expect(event).toHaveProperty("price", expect.any(Number));
+                expect(event).toHaveProperty("event_image_url", expect.any(String));
+                expect(event).toHaveProperty("is_published", expect.any(Boolean));
+                expect(event).toHaveProperty("created_at", expect.any(String));
+                expect(event).toHaveProperty("last_updated_at", expect.any(String));
+                expect(Object.entries(event).length).toBe(20);
             });
+        });
+    });
+    test("200: responds with an empty array and an appropriate status code when passed an existing username but the user has not signed up to any events yet", () => {
+        return request(app)
+        .get("/api/marcus_liu88/events")
+        .expect(200)
+        .then(({ body: { events } } : { body: CustomResponse }) => {
+            expect(events.length).toBe(0);
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+        return request(app)
+        .get("/api/scottgirling/events")
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Profile not found.");
         });
     });
 });
