@@ -559,3 +559,27 @@ describe("PATCH /api/events/:event_id", () => {
         });
     });
 });
+
+describe("DELETE /api/events/:event_id", () => {
+    test("200: removes the event object of the given 'event_id' and responds with an appropriate status code", () => {
+        return request(app)
+        .delete("/api/events/1")
+        .expect(204)
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid id", () => {
+        return request(app)
+        .delete("/api/events/one")
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent id", () => {
+        return request(app)
+        .delete("/api/events/101")
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Event not found.");
+        });
+    });
+});
