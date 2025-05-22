@@ -27,13 +27,13 @@ describe("GET /api", () => {
 });
 
 describe("GET /api/events", () => {
-    test("200: responds with an array of event objects, with the appropriate properties and status code", () => {
+    test("200: responds with an array of published event objects, with the appropriate properties and status code", () => {
         return request(app)
         .get("/api/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(Array.isArray(events)).toBe(true);
-            expect(events.length).toBe(5);
+            expect(events.length).toBe(4);
             events.forEach((event) => {
                 expect(event).toHaveProperty("event_id", expect.any(Number));
                 expect(event).toHaveProperty("title", expect.any(String));
@@ -70,8 +70,7 @@ describe("GET /api/events", () => {
                     expect(output[0].price).toBe(0.00);
                     expect(output[1].price).toBe(0.00);
                     expect(output[2].price).toBe(95.00);
-                    expect(output[3].price).toBe(150.00);
-                    expect(output[4].price).toBe(180.00);
+                    expect(output[3].price).toBe(180.00);
                 });
             });
             test("200: responds with a sorted array of event objects by the default column ('start_time') when one is not specifically selected, as well as an appropriate status code", () => {
@@ -84,7 +83,6 @@ describe("GET /api/events", () => {
                     expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
                     expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
                     expect(output[3].start_time).toBe("2025-10-14T09:00:00Z");
-                    expect(output[4].start_time).toBe("2025-11-05T10:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when sorted by an invalid, non-existent column", () => {
@@ -103,11 +101,10 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
                     const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-11-05T10:00:00Z");
-                    expect(output[1].start_time).toBe("2025-10-14T09:00:00Z");
-                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(output[3].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[4].start_time).toBe("2025-07-18T09:00:00Z");
+                    expect(output[0].start_time).toBe("2025-10-14T09:00:00Z");
+                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[2].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[3].start_time).toBe("2025-07-18T09:00:00Z");
                 });
             });
             test("200: responds with an ordered array of event objects by a default value ('asc') when one is not specifically selected, as well as an appropriate status code", () => {
@@ -120,7 +117,6 @@ describe("GET /api/events", () => {
                     expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
                     expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
                     expect(output[3].start_time).toBe("2025-10-14T09:00:00Z");
-                    expect(output[4].start_time).toBe("2025-11-05T10:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when ordered by an invalid, non-existent value", () => {
@@ -166,7 +162,7 @@ describe("GET /api/events", () => {
                     .expect(200)
                     .then(({ body: { events } } : { body: CustomResponse }) => {
                         const output: Array<any> = events;
-                        expect(output.length).toBe(2);
+                        expect(output.length).toBe(1);
                         output.forEach((event) => {
                             expect(event.is_online).toBe(true);
                         });
@@ -174,7 +170,7 @@ describe("GET /api/events", () => {
                 });
                 test("200: responds with a filtered array of event objects when multiple filters are provided, as well as an appropriate status code", () => {
                     return request(app)
-                    .get("/api/events?tag=innovation&is_online=true")
+                    .get("/api/events?tag=technology&is_online=true")
                     .expect(200)
                     .then(({ body: { events } } : { body: CustomResponse }) => {
                         expect(events.length).toBe(1);
@@ -225,10 +221,10 @@ describe("GET /api/events", () => {
         describe("limit", () => {
             test("200: responds with an array of event objects according to the 'limit' query, as well as an appropriate status code", () => {
                 return request(app)
-                .get("/api/events?limit=4")
+                .get("/api/events?limit=3")
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
-                    expect(events.length).toBe(4);
+                    expect(events.length).toBe(3);
                 });
             });
             test("200: responds with an array of event objects according to a default 'limit' value (12) when one is not specifically selected, as well as an appriopriate status code", () => {
@@ -236,7 +232,7 @@ describe("GET /api/events", () => {
                 .get("/api/events")
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
-                    expect(events.length).toBe(5);
+                    expect(events.length).toBe(4);
                 });
             });
             test("400: responds with an appropriate status code and error message when passed an invalid 'limit' query", () => {
@@ -251,7 +247,7 @@ describe("GET /api/events", () => {
         describe("p", () => {
             test("200: responds with an array of event objects according to the 'p' query, as well as an appropriate status code", () => {
                 return request(app)
-                .get("/api/events?sort_by=price&limit=2&p=3")
+                .get("/api/events?sort_by=price&limit=3&p=2")
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
                     const output: Array<any> = events;
