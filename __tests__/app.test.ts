@@ -583,3 +583,25 @@ describe("DELETE /api/events/:event_id", () => {
         });
     });
 });
+
+describe("POST /api/user_events", () => {
+    test("201: responds with the newly created user-event entry, as well as an appropriate status code", () => {
+        return request(app)
+        .post("/api/user_events")
+        .send({ user_id: 1, event_id: 4 })
+        .expect(201)
+        .then(({ body: { userEvent } } : { body: CustomResponse }) => {
+            expect(userEvent).toHaveProperty("user_id", 1)
+            expect(userEvent).toHaveProperty("event_id", 4);
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain the correct fields", () => {
+        return request(app)
+        .post("/api/user_events")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+});
