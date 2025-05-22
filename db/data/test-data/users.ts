@@ -54,6 +54,16 @@ export const users: User[] = [
     "last_updated_at": "2025-05-06T15:00:00.000Z",
     "bio": "Founder of StartUp Innovators. Organizing events for aspiring entrepreneurs.",
     "avatar_url": "https://example.com/avatars/ella.jpg"
+  },
+  {
+    "name": "Marcus Liu",
+    "username": "marcus_liu88",
+    "email": "marcus.liu@example.com",
+    "password_hash": "$2b$10$B7JkT8yKh7P2b0ZPZ1UyTO7nZnM9T9zwAyYlHEy6yOvD/WzbgYOXW",
+    "role": "attendee",
+    "created_at": "2025-04-15T14:30:00.000Z",
+    "last_updated_at": "2025-05-18T16:20:00.000Z",
+    "bio": "Developer advocate and public speaker passionate about open-source technology.",
+    "avatar_url": "https://example.com/avatars/marcus.jpg"
   }
-
 ]
