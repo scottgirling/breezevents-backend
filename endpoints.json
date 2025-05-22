@@ -443,5 +443,15 @@
         "queries": [],
         "examplePath": "/api/events/1",
         "exampleResponse": "none - only a 204 status code"
+    },
+    "POST /api/user_events": {
+        "description": "serves an individual user-event object that the user has just signed up to attend",
+        "queries": [],
+        "exampleRequestBody": { "user_id": 1, "event_id": 4 },
+        "examplePath": "/api/user_events",
+        "exampleResponse": {
+            "user_id": 1,
+            "event_id": 4
+        }
     }
 }
