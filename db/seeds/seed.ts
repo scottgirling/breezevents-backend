@@ -55,6 +55,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         const usersTablePromise = db.query(`CREATE TABLE users (
             user_id SERIAL PRIMARY KEY,
             name VARCHAR NOT NULL,
+            username VARCHAR NOT NULL,
             email VARCHAR NOT NULL,
             password_hash VARCHAR NOT NULL,
             bio TEXT,
@@ -121,7 +122,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         const venuesPromise = db.query(insertVenuesQueryString);
 
         const insertUsersQueryString = format(
-            `INSERT INTO users (name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url }) => [ name, email, password_hash, role, created_at, last_updated_at, bio, avatar_url])
+            `INSERT INTO users (name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url }) => [name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url])
         )
         const usersPromise = db.query(insertUsersQueryString);
 

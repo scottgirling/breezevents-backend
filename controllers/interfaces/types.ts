@@ -7,7 +7,8 @@ export interface CustomResponse extends Response {
     event: object;
     msg: string;
     tags: Array<object>;
-    userEvents: Array<object>
+    userEvents: Array<object>;
+    user: object;
 }
 
 export interface CustomRequest extends Request {

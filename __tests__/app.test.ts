@@ -357,6 +357,36 @@ describe("GET /api/tags", () => {
     });
 });
 
+describe("GET /api/users/:username", () => {
+    test("200: responds with an individual user object, with the appropriate properties and status code", () => {
+        return request(app)
+        .get("/api/users/alice_thompson123")
+        .expect(200)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            expect(user).toMatchObject({
+                "user_id": 1,
+                "name": "Alice Thompson",
+                "username": "alice_thompson123",
+                "email": "alice.thompson@example.com",
+                "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
+                "role": "attendee",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "last_updated_at": "2025-05-10T10:00:00.000Z",
+                "bio": "Tech enthusiast. Always looking for new innovative solutions.",
+                "avatar_url": "https://example.com/avatars/alice.jpg"
+            });
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+        return request(app)
+        .get("/api/users/scottgirling")
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("User does not exist.");
+        });
+    });
+});
+
 describe("GET /api/user-events", () => {
     test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
         return request(app)
