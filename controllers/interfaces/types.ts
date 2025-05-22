@@ -16,7 +16,7 @@ export interface CustomRequest extends Request {
     body: any;
 }
 
-export interface Error {
+export interface CustomError extends Error {
     status: number;
     code: string;
     msg: string;

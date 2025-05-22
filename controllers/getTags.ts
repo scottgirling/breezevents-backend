@@ -1,7 +1,7 @@
 import { CustomResponse } from "./interfaces/types";
 const selectTags = require("../models/selectTags");
 
-const getTags = (request: any, response: CustomResponse) => {
+const getTags = (request: Request, response: CustomResponse) => {
     selectTags()
     .then((tags: Array<object>) => {
         response.status(200).send({ tags });
