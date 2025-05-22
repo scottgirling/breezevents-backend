@@ -13,4 +13,11 @@ export interface CustomResponse extends Response {
 export interface CustomRequest extends Request {
     params: any;
     query: any;
+    body: any;
+}
+
+export interface Error {
+    status: number;
+    code: string;
+    msg: string;
 }

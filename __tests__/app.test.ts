@@ -456,3 +456,106 @@ describe("GET /api/:username/events", () => {
         });
     });
 });
+
+describe("PATCH /api/events/:event_id", () => {
+    test("200: responds with an updated event object when the 'attendees_count' column is incremented, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/events/1")
+        .send({ attendeeCountChange: 1 })
+        .expect(200)
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "event_id": 1,
+                "title": "UK Tech Expo 2025",
+                "slug": "uk-tech-expo-2025",
+                "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
+                "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
+                "start_time": "2025-10-14T09:00:00Z",
+                "end_time": "2025-10-16T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 1,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "expo",
+                "capacity": 800,
+                "attendees_count": 546,
+                "is_free": false,
+                "price": 180.00,
+                "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-10T10:00:00.000Z",
+                "last_updated_at": "2025-05-12T14:00:00.000Z"
+            }
+            expect(event).toMatchObject(expectedOutput);
+            expect(Object.entries(event).length).toBe(20);
+        });
+    });
+    test("200: responds with an updated event object when the 'attendees_count' column is decremented, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/events/1")
+        .send({ attendeeCountChange: -1 })
+        .expect(200)
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "event_id": 1,
+                "title": "UK Tech Expo 2025",
+                "slug": "uk-tech-expo-2025",
+                "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
+                "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
+                "start_time": "2025-10-14T09:00:00Z",
+                "end_time": "2025-10-16T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 1,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "expo",
+                "capacity": 800,
+                "attendees_count": 544,
+                "is_free": false,
+                "price": 180.00,
+                "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-10T10:00:00.000Z",
+                "last_updated_at": "2025-05-12T14:00:00.000Z"
+            }
+            expect(event).toMatchObject(expectedOutput);
+            expect(Object.entries(event).length).toBe(20);
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain the correct fields", () => {
+        return request(app)
+        .patch("/api/events/1")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body is passed an invalid 'attendeeCountChange' value", () => {
+        return request(app)
+        .patch("/api/events/1")
+        .send({ attendeeCountChange: "one" })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid id", () => {
+        return request(app)
+        .patch("/api/events/one")
+        .send({ attendeeCountChange: 1 })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent id", () => {
+        return request(app)
+        .patch("/api/events/33")
+        .send({ attendeeCountChange: 1 })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Profile not found.");
+        });
+    });
+});
