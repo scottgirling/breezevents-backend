@@ -337,6 +337,29 @@ describe("GET /api/events/:event_id", () => {
     });
 });
 
+describe("GET /api/events/host/:username", () => {
+    test("200: responds with an array of event objects according to the event host, as well as an appropriate status code", () => {
+        return request(app)
+        .get("/api/events/host/ahmedben96")
+        .expect(200)
+        .then(({ body: { events } } : { body: CustomResponse }) => {
+            const output: Array<any> = events;
+            expect(output.length).toBe(2);
+            output.forEach((event) => {
+                expect(event.host).toBe("ahmedben96");
+            });
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+        return request(app)
+        .get("/api/events/host/scottgirling")
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Host not found.");
+        });
+    });
+});
+
 describe("GET /api/tags", () => {
     test("200: responds with an array of tag objects, with the appropriate properties and status code", () => {
         return request(app)

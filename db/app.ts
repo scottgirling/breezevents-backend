@@ -4,6 +4,7 @@ const app = express();
 const getEndpoints = require ("../controllers/getEndpoints");
 const getEvents = require("../controllers/getEvents");
 const getEventById = require("../controllers/getEventById");
+const getEventsByHostUsername = require("../controllers/getEventsByHostUsername");
 const getTags = require("../controllers/getTags");
 const getUserByUsername = require("../controllers/getUserByUsername");
 const getUserEventsById = require("../controllers/getUserEventsById");
@@ -15,6 +16,8 @@ app.get("/api", getEndpoints);
 app.get("/api/events", getEvents);
 
 app.get("/api/events/:event_id", getEventById);
+
+app.get("/api/events/host/:username", getEventsByHostUsername);
 
 app.use("/api/tags", getTags);
 

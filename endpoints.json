@@ -218,6 +218,59 @@
             "last_updated_at": "2025-05-12T14:00:00Z"
         }
     },
+    "GET /api/events/host/:username" : {
+        "description": "serves an array of event objects according to the event host",
+        "queries": [],
+        "examplePath": "/api/events/host/ahmedben96",
+        "exampleResponse": [
+            {
+                "event_id": 1,
+                "title": "UK Tech Expo 2025",
+                "slug": "uk-tech-expo-2025",
+                "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
+                "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
+                "start_time": "2025-10-14T09:00:00Z",
+                "end_time": "2025-10-16T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 1,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "expo",
+                "capacity": 800,
+                "attendees_count": 545,
+                "is_free": false,
+                "price": 180.00,
+                "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-10T10:00:00.000Z",
+                "last_updated_at": "2025-05-12T14:00:00.000Z",
+                "host": "ahmedben96"
+            },
+            {
+                "event_id": 2,
+                "title": "Green Future Forum",
+                "slug": "green-future-forum-2025",
+                "event_overview": "A sustainability-focused conference exploring climate tech, clean energy, and circular economy solutions.",
+                "description": "The Green Future Forum 2025 brings together environmental leaders, policymakers, and innovators to discuss actionable strategies for a sustainable future. Sessions include case studies on renewable energy, circular economy practices, and policy frameworks, with interactive workshops on green financing and climate risk.",
+                "start_time": "2025-09-12T09:30:00Z",
+                "end_time": "2025-09-13T16:30:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 2,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "conference",
+                "capacity": 500,
+                "attendees_count": 460,
+                "is_free": true,
+                "price": 0.00,
+                "event_image_url": "https://example.co.uk/images/greenfutureforum.jpg",
+                "is_published": true,
+                "created_at": "2025-05-05T08:15:00.000Z",
+                "last_updated_at": "2025-05-10T11:30:00.000Z",
+                "host": "ahmedben96"
+            }
+        ]
+    },
     "GET /api/tags": {
         "description": "serves an array of tag objects",
         "queries": [],
