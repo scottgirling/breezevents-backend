@@ -1,3 +1,4 @@
+import { title } from "process";
 import { CustomResponse } from "../controllers/interfaces/types";
 
 const request = require("supertest");
@@ -587,6 +588,160 @@ describe("PATCH /api/events/:event_id", () => {
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");
+        });
+    });
+});
+
+describe("PATCH /api/events/update/:event_id", () => {
+    test("200: responds with an updated event object when a single event column is amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/events/update/1")
+        .send({ venue_id: 2 })
+        .expect(200)
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "event_id": 1,
+                "title": "UK Tech Expo 2025",
+                "slug": "uk-tech-expo-2025",
+                "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
+                "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
+                "start_time": "2025-10-14T09:00:00Z",
+                "end_time": "2025-10-16T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 2,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "expo",
+                "capacity": 800,
+                "attendees_count": 545,
+                "is_free": false,
+                "price": 180.00,
+                "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-10T10:00:00.000Z",
+            }
+            expect(event).toMatchObject(expectedOutput);
+            expect(event).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("200: responds with an updated event object when multiple event columns are amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/events/update/1")
+        .send({
+            title: "UK Technology Expo 2025",
+            event_overview: "A 3-day expo showcasing emerging technologies and innovation from across the United Kingdom.",
+            venue_id: 2,
+            price: 99.00
+        })
+        .expect(200)
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "event_id": 1,
+                "title": "UK Technology Expo 2025",
+                "slug": "uk-technology-expo-2025",
+                "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the United Kingdom.",
+                "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
+                "start_time": "2025-10-14T09:00:00Z",
+                "end_time": "2025-10-16T17:00:00Z",
+                "timezone": "Europe/London",
+                "venue_id": 2,
+                "is_online": false,
+                "host_id": 2,
+                "event_type": "expo",
+                "capacity": 800,
+                "attendees_count": 545,
+                "is_free": false,
+                "price": 99.00,
+                "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-10T10:00:00.000Z",
+            }
+            expect(event).toMatchObject(expectedOutput);
+            expect(event).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("200: responds with the updated event object when all valid event columns are amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/events/update/3")
+        .send({
+            "title": "AgriTech Innovation Forum 2025",
+            "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+            "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+            "start_time": "2025-08-12T09:00:00Z",
+            "end_time": "2025-08-13T17:30:00Z",
+            "timezone": "Europe/Paris",
+            "venue_id": 2,
+            "is_online": false,
+            "event_type": "forum",
+            "capacity": 1200,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true,
+        })
+        .expect(200)
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "event_id": 3,
+                "title": "AgriTech Innovation Forum 2025",
+                "slug": "agritech-innovation-forum-2025",
+                "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+                "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+                "start_time": "2025-08-12T09:00:00Z",
+                "end_time": "2025-08-13T17:30:00Z",
+                "timezone": "Europe/Paris",
+                "venue_id": 2,
+                "is_online": false,
+                "host_id": 4,
+                "event_type": "forum",
+                "capacity": 1200,
+                "attendees_count": 775,
+                "is_free": false,
+                "price": 120.00,
+                "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+                "is_published": true,
+                "created_at": "2025-05-01T09:00:00.000Z",
+            }
+            expect(event).toMatchObject(expectedOutput);
+            expect(event).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain any fields", () => {
+        return request(app)
+        .patch("/api/events/update/1")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when one or more fields of the request body is passed an invalid data type", () => {
+        return request(app)
+        .patch("/api/events/update/1")
+        .send({
+            capacity: "one thousand"
+        })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid 'event_id'", () => {
+        return request(app)
+        .patch("/api/events/update/three")
+        .send({ is_published: true })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'event_id'", () => {
+        return request(app)
+        .patch("/api/events/update/45")
+        .send({ capacity: 1234 })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Event not found.");
         });
     });
 });
