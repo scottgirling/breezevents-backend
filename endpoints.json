@@ -453,5 +453,50 @@
             "user_id": 1,
             "event_id": 4
         }
+    },
+    "POST /api/events": {
+        "description": "serves the newly created event object",
+        "queries": [],
+        "examplePath": "/api/events",
+        "exampleRequestBody": {
+            "title": "AgriTech Innovation Forum 2025",
+            "slug": "agritech-innovation-forum-2025",
+            "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+            "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+            "start_time": "2025-08-12T09:00:00Z",
+            "end_time": "2025-08-13T17:30:00Z",
+            "timezone": "Europe/London",
+            "venue_id": 3,
+            "is_online": false,
+            "host_id": 2,
+            "event_type": "forum",
+            "capacity": 600,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true
+        },
+        "exampleResponse": {
+            "event_id": 6,
+            "title": "AgriTech Innovation Forum 2025",
+            "slug": "agritech-innovation-forum-2025",
+            "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+            "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+            "start_time": "2025-08-12T09:00:00Z",
+            "end_time": "2025-08-13T17:30:00Z",
+            "timezone": "Europe/London",
+            "venue_id": 3,
+            "is_online": false,
+            "host_id": 2,
+            "event_type": "forum",
+            "capacity": 600,
+            "attendees_count": 0,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true,
+            "created_at": "2025-05-23T11:48:00.000Z",
+            "last_updated_at": "2025-05-23T11:48:00.000Z"
+        }
     }
 }
