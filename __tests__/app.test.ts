@@ -437,10 +437,10 @@ describe("GET /api/users/:username", () => {
     });
 });
 
-describe("GET /api/:username/events", () => {
+describe("GET /api/users/:username/events", () => {
     test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/alice_thompson123/events")
+        .get("/api/users/alice_thompson123/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(Array.isArray(events)).toBe(true);
@@ -472,7 +472,7 @@ describe("GET /api/:username/events", () => {
     });
     test("200: responds with an empty array and an appropriate status code when passed an existing username but the user has not signed up to any events yet", () => {
         return request(app)
-        .get("/api/marcus_liu88/events")
+        .get("/api/users/marcus_liu88/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(events.length).toBe(0);
@@ -480,7 +480,7 @@ describe("GET /api/:username/events", () => {
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
         return request(app)
-        .get("/api/scottgirling/events")
+        .get("/api/users/scottgirling/events")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");

@@ -1,6 +1,5 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-
 const addEvent = require("../models/addEvent");
 
 const postEvent = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
