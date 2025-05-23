@@ -1,4 +1,3 @@
-import { time } from "console";
 import { CustomResponse } from "../controllers/interfaces/types";
 
 const request = require("supertest");
