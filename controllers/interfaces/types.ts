@@ -9,6 +9,7 @@ export interface CustomResponse extends Response {
     tags: Array<object>;
     user: object;
     userEvent: object;
+    venues: Array<object>;
 }
 
 export interface CustomRequest extends Request {

@@ -9,6 +9,7 @@ const getEvents = require("../controllers/getEvents");
 const getEventById = require("../controllers/getEventById");
 const getEventsByHostUsername = require("../controllers/getEventsByHostUsername");
 const getTags = require("../controllers/getTags");
+const getVenues = require("../controllers/getVenues");
 const getUserByUsername = require("../controllers/getUserByUsername");
 const getEventsByUsername = require("../controllers/getEventsByUsername");
 const patchEventById = require("../controllers/patchEventById");
@@ -27,6 +28,8 @@ app.get("/api/events/:event_id", getEventById);
 app.get("/api/events/host/:username", getEventsByHostUsername);
 
 app.get("/api/tags", getTags);
+
+app.get("/api/venues", getVenues);
 
 app.get("/api/users/:username", getUserByUsername);
 
