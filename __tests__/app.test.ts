@@ -376,6 +376,37 @@ describe("GET /api/tags", () => {
     });
 });
 
+describe("GET /api/venues", () => {
+    test("200: responds with an array of venue objects, with the appropriate properties and status code", () => {
+        return request(app)
+        .get("/api/venues")
+        .expect(200)
+        .then(({ body: { venues } } : { body: CustomResponse}) => {
+            expect(Array.isArray(venues)).toBe(true);
+            expect(venues.length).toBe(3);
+            venues.forEach((venue) => {
+                expect(venue).toHaveProperty("venue_id", expect.any(Number))
+                expect(venue).toHaveProperty("venue_name", expect.any(String));
+                expect(venue).toHaveProperty("venue_type", expect.any(String));
+                expect(venue).toHaveProperty("location", expect.any(String));
+                expect(venue).toHaveProperty("capacity", expect.any(Number));
+                expect(venue).toHaveProperty("facilities", expect.any(Array));
+                expect(venue).toHaveProperty("contact_email", expect.any(String));
+                expect(venue).toHaveProperty("contact_phone", expect.any(String));
+                expect(venue).toHaveProperty("website_url", expect.any(String));
+                expect(venue).toHaveProperty("event_types", expect.any(Array));
+                expect(venue).toHaveProperty("accessibility_features", expect.any(Array));
+                expect(venue).toHaveProperty("parking_info", expect.any(String));
+                expect(venue).toHaveProperty("image_gallery", expect.any(Array));
+                expect(venue).toHaveProperty("nearby_transport", expect.any(String));
+                expect(venue).toHaveProperty("created_at", expect.any(String));
+                expect(venue).toHaveProperty("last_updated_at", expect.any(String));
+                expect(Object.entries(venue).length).toBe(16);
+            });
+        });
+    });
+});
+
 describe("GET /api/users/:username", () => {
     test("200: responds with an individual user object, with the appropriate properties and status code", () => {
         return request(app)
