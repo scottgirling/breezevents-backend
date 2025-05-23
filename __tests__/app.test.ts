@@ -1,4 +1,3 @@
-import { title } from "process";
 import { CustomResponse } from "../controllers/interfaces/types";
 
 const request = require("supertest");
