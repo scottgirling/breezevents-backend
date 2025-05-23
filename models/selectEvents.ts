@@ -2,9 +2,10 @@ const db = require("../db/connection");
 const checkTagExists = require("./utils/checkTagExists");
 
 const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag: string, is_online: string, is_free: string, limit: number = 12, p: number = 1) => {
+    const offset = (p - 1) * limit;
     const validSortBy = ["start_time", "price", "created_at"];
     const validOrder = ["asc", "desc"];
-    let filterQueries: any = [];
+    let filterQueries = [];
 
     if (!validSortBy.includes(sort_by) || !validOrder.includes(order)) {
         return Promise.reject({ status: 400, msg: "Invalid 'Sort By' or 'Order' query." });
@@ -27,7 +28,8 @@ const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag
         sqlQuery += ` AND events.is_free = $${filterQueries.length}`;
     }
 
-    sqlQuery += ` ORDER BY ${sort_by} ${order} LIMIT ${limit} OFFSET ${((p - 1) * limit)}`;
+
+    sqlQuery += ` ORDER BY ${sort_by} ${order} LIMIT ${limit} OFFSET ${offset}`;
 
     return db.query(sqlQuery, filterQueries)
     .then(({ rows } : { rows: Array<object> }) => {
