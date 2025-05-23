@@ -628,10 +628,10 @@ describe("PATCH /api/events/update/:event_id", () => {
         return request(app)
         .patch("/api/events/update/1")
         .send({
-            title: "UK Technology Expo 2025",
-            event_overview: "A 3-day expo showcasing emerging technologies and innovation from across the United Kingdom.",
-            venue_id: 2,
-            price: 99.00
+            "title": "UK Technology Expo 2025",
+            "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the United Kingdom.",
+            "venue_id": 2,
+            "price": 99.00
         })
         .expect(200)
         .then(({ body: { event } } : { body: CustomResponse }) => {
@@ -719,7 +719,7 @@ describe("PATCH /api/events/update/:event_id", () => {
         return request(app)
         .patch("/api/events/update/1")
         .send({
-            capacity: "one thousand"
+            "capacity": "one thousand"
         })
         .expect(400)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
@@ -729,7 +729,7 @@ describe("PATCH /api/events/update/:event_id", () => {
     test("400: responds with an appropriate status code and error message when passed an invalid 'event_id'", () => {
         return request(app)
         .patch("/api/events/update/three")
-        .send({ is_published: true })
+        .send({ "is_published": true })
         .expect(400)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Invalid data type.");
@@ -738,7 +738,7 @@ describe("PATCH /api/events/update/:event_id", () => {
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'event_id'", () => {
         return request(app)
         .patch("/api/events/update/45")
-        .send({ capacity: 1234 })
+        .send({ "capacity": 1234 })
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Event not found.");
