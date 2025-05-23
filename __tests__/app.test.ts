@@ -604,6 +604,15 @@ describe("POST /api/user_events", () => {
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
+    test("404: responds with an appropriate status code and error message when the request body contains a valid but non-existent user or event id", () => {
+        return request(app)
+        .post("/api/user_events")
+        .send({ user_id: 1, event_id: 44 })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("User or event not found.");
+        });
+    });
 });
 
 describe("POST /api/events", () => {

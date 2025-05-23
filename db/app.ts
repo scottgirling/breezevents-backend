@@ -61,4 +61,11 @@ app.use((error: CustomError, request: CustomRequest, response: CustomResponse, n
     next(error);
 });
 
+app.use((error: CustomError, request: CustomRequest, response:CustomResponse, next: NextFunction) => {
+    if (error.code === "23503") {
+        response.status(404).send({ msg: "User or event not found." });
+    }
+    next(error);
+});
+
 module.exports = app;
