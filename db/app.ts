@@ -14,6 +14,7 @@ const getEventsByUsername = require("../controllers/getEventsByUsername");
 const patchEventById = require("../controllers/patchEventById");
 const deleteEventById = require("../controllers/deleteEventById");
 const postUserEvent = require("../controllers/postUserEvent");
+const postEvent = require("../controllers/postEvent");
 
 app.use(express.json());
 
@@ -36,6 +37,8 @@ app.patch("/api/events/:event_id", patchEventById);
 app.delete("/api/events/:event_id", deleteEventById);
 
 app.post("/api/user_events", postUserEvent);
+
+app.post("/api/events", postEvent);
 
 app.use((error: CustomError, request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     if (error.status && error.msg) {

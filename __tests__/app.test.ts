@@ -605,3 +605,96 @@ describe("POST /api/user_events", () => {
         });
     });
 });
+
+describe("POST /api/events", () => {
+    test("201: responds with the newly created event, with the appropriate properties and status code", () => {
+        return request(app)
+        .post("/api/events")
+        .send({
+            "title": "AgriTech Innovation Forum 2025",
+            "slug": "agritech-innovation-forum-2025",
+            "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+            "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+            "start_time": "2025-08-12T09:00:00Z",
+            "end_time": "2025-08-13T17:30:00Z",
+            "timezone": "Europe/London",
+            "venue_id": 3,
+            "is_online": false,
+            "host_id": 2,
+            "event_type": "forum",
+            "capacity": 600,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true,
+        })
+        .then(({ body: { event } } : { body: CustomResponse }) => {
+            expect(event).toHaveProperty("event_id", 6);
+            expect(event).toHaveProperty("title", "AgriTech Innovation Forum 2025");
+            expect(event).toHaveProperty("slug", "agritech-innovation-forum-2025");
+            expect(event).toHaveProperty("event_overview", "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.");
+            expect(event).toHaveProperty("description", "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.");
+            expect(event).toHaveProperty("start_time", "2025-08-12T09:00:00Z");
+            expect(event).toHaveProperty("end_time", "2025-08-13T17:30:00Z");
+            expect(event).toHaveProperty("timezone", "Europe/London");
+            expect(event).toHaveProperty("venue_id", 3);
+            expect(event).toHaveProperty("is_online", false);
+            expect(event).toHaveProperty("host_id", 2);
+            expect(event).toHaveProperty("event_type", "forum");
+            expect(event).toHaveProperty("capacity", 600);
+            expect(event).toHaveProperty("attendees_count", 0);
+            expect(event).toHaveProperty("is_free", false);
+            expect(event).toHaveProperty("price", 120.00);
+            expect(event).toHaveProperty("event_image_url", "https://example.co.uk/images/agritechforum2025.jpg");
+            expect(event).toHaveProperty("is_published", true);
+            expect(event).toHaveProperty("created_at", expect.any(String));
+            expect(event).toHaveProperty("last_updated_at", expect.any(String));
+            expect(Object.entries(event).length).toBe(20);
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain the correct fields", () => {
+        return request(app)
+        .post("/api/events")
+        .send({
+            "venue_id": 3,
+            "is_online": false,
+            "host_id": 2,
+            "event_type": "forum",
+            "capacity": 600,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true
+        })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body contains the correct fields but one or more fields contain an invalid data type", () => {
+        return request(app)
+        .post("/api/events")
+        .send({
+            "title": "AgriTech Innovation Forum 2025",
+            "slug": "agritech-innovation-forum-2025",
+            "event_overview": "A 2-day forum exploring the intersection of agriculture and cutting-edge technology.",
+            "description": "The AgriTech Innovation Forum 2025 brings together farmers, agronomists, tech developers, investors, and policymakers to explore how technology is transforming global agriculture. From precision farming and autonomous machinery to climate-smart practices and agri-robotics, this event showcases innovations that improve yields, reduce environmental impact, and build resilient food systems. Attendees can engage in live demos, breakout sessions, and strategic panels led by thought leaders in sustainable agriculture.",
+            "start_time": "2025-08-12T09:00:00Z",
+            "end_time": "2025-08-13T17:30:00Z",
+            "timezone": "Europe/London",
+            "venue_id": 3,
+            "is_online": "not sure",
+            "host_id": 2,
+            "event_type": "forum",
+            "capacity": 600,
+            "is_free": false,
+            "price": 120.00,
+            "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
+            "is_published": true,
+        })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+});
