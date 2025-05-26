@@ -1,5 +1,4 @@
-// will change LINE 2 when I add dev data
-import * as devData from '../data/test-data/index';
+import * as devData from '../data/development-data/index';
 const seed = require("./seed");
 const db = require("../connection");
 
