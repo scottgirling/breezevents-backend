@@ -1,6 +1,6 @@
 const getEvents = require("../../controllers/getEvents");
-const getEventById = require("../../controllers/getEventById");
-const getEventsByHostUsername = require("../../controllers/getEventsByHostUsername");
+const getEventByEventId = require("../../controllers/getEventByEventId");
+const getEventsByHostId = require("../../controllers/getEventsByHostId");
 const patchEventById = require("../../controllers/patchEventById");
 const patchEventDetailsById = require("../../controllers/patchEventDetailsById");
 const postEvent = require("../../controllers/postEvent");
@@ -15,7 +15,7 @@ eventsRouter
 
 eventsRouter
     .route("/:event_id")
-    .get(getEventById)
+    .get(getEventByEventId)
     .patch(patchEventById)
     .delete(deleteEventById);
 
@@ -24,7 +24,7 @@ eventsRouter
     .patch(patchEventDetailsById);
 
 eventsRouter
-    .route("/host/:username")
-    .get(getEventsByHostUsername);
+    .route("/host/:user_id")
+    .get(getEventsByHostId);
 
 module.exports = eventsRouter;

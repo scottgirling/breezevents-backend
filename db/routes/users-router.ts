@@ -1,6 +1,6 @@
-const getUserByUsername = require("../../controllers/getUserByUsername");
-const getEventsByUsername = require("../../controllers/getEventsByUsername");
-const patchUserByUsername = require("../../controllers/patchUserById");
+const getUserById = require("../../controllers/getUserById");
+const getEventsByUserId = require("../../controllers/getEventsByUserId");
+const patchUserById = require("../../controllers/patchUserById");
 const postUser = require("../../controllers/postUser");
 
 const usersRouter = require("express").Router();
@@ -11,11 +11,11 @@ usersRouter
 
 usersRouter
     .route("/:user_id")
-    .get(getUserByUsername)
-    .patch(patchUserByUsername);
+    .get(getUserById)
+    .patch(patchUserById);
 
 usersRouter
-    .route("/:username/events")
-    .get(getEventsByUsername);
+    .route("/:user_id/events")
+    .get(getEventsByUserId);
 
 module.exports = usersRouter;
