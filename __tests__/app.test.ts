@@ -745,6 +745,91 @@ describe("PATCH /api/events/update/:event_id", () => {
     });
 });
 
+describe("PATCH /api/users/:user_id", () => {
+    test("200: responds with an updated user object when a single user column is amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(200)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "user_id": 1,
+                "name": "Alice Thompson",
+                "username": "alice_thompson123",
+                "email": "alice.thompson@example.com",
+                "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
+                "role": "attendee",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "bio": "I LOVE TECH! Always looking to meet cool tech peeps!",
+                "avatar_url": "https://example.com/avatars/alice.jpg"
+            }
+            expect(user).toMatchObject(expectedOutput);
+            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("200: responds with an updated user object when multiple user columns are amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({
+            "name": "Scott Girling",
+            "username": "scottgirling123",
+            "email": "scott@yahoo.com",
+            "password_hash": "password_hash",
+            "bio": "A software developer looking to find cool tech events near me!",
+            "avatar_url": "https://example.com/avatars/scott.jpg"
+        })
+        .expect(200)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "user_id": 1,
+                "name": "Scott Girling",
+                "username": "scottgirling123",
+                "email": "scott@yahoo.com",
+                "password_hash": "password_hash",
+                "role": "attendee",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "bio": "A software developer looking to find cool tech events near me!",
+                "avatar_url": "https://example.com/avatars/scott.jpg"
+            }
+            expect(user).toMatchObject(expectedOutput);
+            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain any fields", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
+        return request(app)
+        .patch("/api/users/one")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'user_id'", () => {
+        return request(app)
+        .patch("/api/users/37")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Profile not found.");
+        });
+    });
+});
+
 describe("DELETE /api/events/:event_id", () => {
     test("200: removes the event object of the given 'event_id' and responds with an appropriate status code", () => {
         return request(app)
