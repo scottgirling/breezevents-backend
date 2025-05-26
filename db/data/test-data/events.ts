@@ -1,4 +1,4 @@
-export interface Event {
+export interface SingleEvent {
   title: string;
   slug: string;
   event_overview: string;
@@ -20,7 +20,7 @@ export interface Event {
   last_updated_at: string;
 }
 
-export const events: Event[] = [
+export const events: SingleEvent[] = [
   {
     "title": "UK Tech Expo 2025",
     "slug": "uk-tech-expo-2025",
@@ -126,4 +126,4 @@ export const events: Event[] = [
     "created_at": "2025-04-28T11:45:00.000Z",
     "last_updated_at": "2025-05-12T16:30:00.000Z"
   }
-]  
+]
