@@ -1,5 +1,6 @@
 const getUserByUsername = require("../../controllers/getUserByUsername");
 const getEventsByUsername = require("../../controllers/getEventsByUsername");
+const patchUserByUsername = require("../../controllers/patchUserById");
 const postUser = require("../../controllers/postUser");
 
 const usersRouter = require("express").Router();
@@ -9,8 +10,9 @@ usersRouter
     .post(postUser)
 
 usersRouter
-    .route("/:username")
-    .get(getUserByUsername);
+    .route("/:user_id")
+    .get(getUserByUsername)
+    .patch(patchUserByUsername);
 
 usersRouter
     .route("/:username/events")
