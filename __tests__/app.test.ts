@@ -892,3 +892,41 @@ describe("POST /api/events", () => {
         });
     });
 });
+
+describe("POST /api/users", () => {
+    test("201: responds with the newly created user, with the appropriate properties and status code", () => {
+        return request(app)
+        .post("/api/users")
+        .send({
+            "name": "Scott Girling",
+            "username": "scottgirling123",
+            "email": "scott@yahoo.com",
+            "password_hash": "password_hash",
+            "bio": "A software developer looking to find cool tech events near me!",
+            "role": "attendee"
+        })
+        .expect(201)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            expect(user).toHaveProperty("user_id", 6);
+            expect(user).toHaveProperty("name", "Scott Girling");
+            expect(user).toHaveProperty("username", "scottgirling123");
+            expect(user).toHaveProperty("email", "scott@yahoo.com");
+            expect(user).toHaveProperty("password_hash", "password_hash");
+            expect(user).toHaveProperty("bio", "A software developer looking to find cool tech events near me!");
+            expect(user).toHaveProperty("avatar_url", null);
+            expect(user).toHaveProperty("role", "attendee");
+            expect(user).toHaveProperty("created_at", expect.any(String));
+            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+            expect(Object.entries(user).length).toBe(10);
+        });
+    });
+    test("400: responds with an appropriate status code and error messafe when the request body does not contain the correct fields", () => {
+        return request(app)
+        .post("/api/users")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+});
