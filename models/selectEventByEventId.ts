@@ -1,6 +1,6 @@
 const db = require("../db/connection");
 
-const selectEventById = (event_id: number) => {
+const selectEventByEventId = (event_id: number) => {
     return db.query("SELECT * FROM events WHERE event_id = $1", [event_id])
     .then(({ rows } : { rows: Array<object> }) => {
         if (!rows.length) {
@@ -10,4 +10,4 @@ const selectEventById = (event_id: number) => {
     });
 }
 
-module.exports = selectEventById;
+module.exports = selectEventByEventId;

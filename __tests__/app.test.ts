@@ -333,10 +333,10 @@ describe("GET /api/events/:event_id", () => {
     });
 });
 
-describe("GET /api/events/host/:username", () => {
+describe("GET /api/events/host/:user_id", () => {
     test("200: responds with an array of event objects according to the event host, as well as an appropriate status code", () => {
         return request(app)
-        .get("/api/events/host/ahmedben96")
+        .get("/api/events/host/2")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             const output: Array<any> = events;
@@ -346,9 +346,17 @@ describe("GET /api/events/host/:username", () => {
             });
         });
     });
+    test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
+        return request(app)
+        .get("/api/events/host/forty-five")
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
         return request(app)
-        .get("/api/events/host/scottgirling")
+        .get("/api/events/host/45")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");
@@ -407,10 +415,10 @@ describe("GET /api/venues", () => {
     });
 });
 
-describe("GET /api/users/:username", () => {
+describe("GET /api/users/:user_id", () => {
     test("200: responds with an individual user object, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/users/alice_thompson123")
+        .get("/api/users/1")
         .expect(200)
         .then(({ body: { user } } : { body: CustomResponse }) => {
             expect(user).toMatchObject({
@@ -427,9 +435,17 @@ describe("GET /api/users/:username", () => {
             });
         });
     });
-    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+    test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
         return request(app)
         .get("/api/users/scottgirling")
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+        return request(app)
+        .get("/api/users/65")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("User does not exist.");
@@ -437,10 +453,10 @@ describe("GET /api/users/:username", () => {
     });
 });
 
-describe("GET /api/users/:username/events", () => {
+describe("GET /api/users/:user_id/events", () => {
     test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/users/alice_thompson123/events")
+        .get("/api/users/1/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(Array.isArray(events)).toBe(true);
@@ -472,15 +488,23 @@ describe("GET /api/users/:username/events", () => {
     });
     test("200: responds with an empty array and an appropriate status code when passed an existing username but the user has not signed up to any events yet", () => {
         return request(app)
-        .get("/api/users/marcus_liu88/events")
+        .get("/api/users/5/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(events.length).toBe(0);
         });
     });
-    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+    test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
         return request(app)
         .get("/api/users/scottgirling/events")
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
+        return request(app)
+        .get("/api/users/654/events")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");
@@ -741,6 +765,91 @@ describe("PATCH /api/events/update/:event_id", () => {
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Event not found.");
+        });
+    });
+});
+
+describe("PATCH /api/users/:user_id", () => {
+    test("200: responds with an updated user object when a single user column is amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(200)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "user_id": 1,
+                "name": "Alice Thompson",
+                "username": "alice_thompson123",
+                "email": "alice.thompson@example.com",
+                "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
+                "role": "attendee",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "bio": "I LOVE TECH! Always looking to meet cool tech peeps!",
+                "avatar_url": "https://example.com/avatars/alice.jpg"
+            }
+            expect(user).toMatchObject(expectedOutput);
+            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("200: responds with an updated user object when multiple user columns are amended, as well as an appropriate status code", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({
+            "name": "Scott Girling",
+            "username": "scottgirling123",
+            "email": "scott@yahoo.com",
+            "password_hash": "password_hash",
+            "bio": "A software developer looking to find cool tech events near me!",
+            "avatar_url": "https://example.com/avatars/scott.jpg"
+        })
+        .expect(200)
+        .then(({ body: { user } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "user_id": 1,
+                "name": "Scott Girling",
+                "username": "scottgirling123",
+                "email": "scott@yahoo.com",
+                "password_hash": "password_hash",
+                "role": "attendee",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "bio": "A software developer looking to find cool tech events near me!",
+                "avatar_url": "https://example.com/avatars/scott.jpg"
+            }
+            expect(user).toMatchObject(expectedOutput);
+            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain any fields", () => {
+        return request(app)
+        .patch("/api/users/1")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
+        return request(app)
+        .patch("/api/users/one")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'user_id'", () => {
+        return request(app)
+        .patch("/api/users/37")
+        .send({
+            "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
+        })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Profile not found.");
         });
     });
 });
