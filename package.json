@@ -9,7 +9,7 @@
     "seed-prod": "NODE_ENV=production npm run seed",
     "test": "TZ=BST jest ./build/__tests__/app.test",
     "build": "npm install",
-    "start": "npx tsc && node ./build/listen.js"
+    "start": "node ./build/listen.js"
   },
   "repository": {
     "type": "git",
