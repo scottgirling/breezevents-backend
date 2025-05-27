@@ -1,14 +1,14 @@
 # Events Platform API
 
 ## Hosted version
-If you would like to try out the hosted version, visit: [ADD LINK]
+If you would like to try out the hosted version, visit: https://events-platform-be-1fmx.onrender.com/api
 
-The '/api' path takes you to a list of all available endpoints. 
+The '/api' path takes you to a list of all available endpoints.  
 Here you will find a description of the endpoint, a list of available queries, an example path with queries (if applicable), an example request body (if applicable) and an example response.
 
 ## Project Summary
-An API built to programmatically access data, featuring full CRUD functionality on a dataset built up of events, venues, users and tags.
-This project offers a real-world backend service which can provide data to frontend architecture.
+An API built to programmatically access data, featuring full CRUD functionality on a dataset built up of events, venues, users and tags.  
+This project offers a real-world backend service which can provide data to frontend architecture.  
 Built with TypeScript and Express, this RESTful API interacts with a PostgreSQL database and encompasses seeding, foreign keys and joins, complex queries, integration testing and error handling.
 
 ## How to get set-up
