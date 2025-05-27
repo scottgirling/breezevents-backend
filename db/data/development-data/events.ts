@@ -109,7 +109,7 @@ export const events: SingleEvent[] = [
   {
     "title": "AI Horizons Conference 2025",
     "slug": "ai-horizons-conference-2025",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A gathering of leaders and innovators exploring the future of artificial intelligence across research, industry, and society.",
     "description": "AI Horizons Conference 2025 brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-06-15T09:00:00Z",
     "end_time": "2025-06-17T17:00:00Z",
@@ -130,7 +130,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Blockchain Futures Forum",
     "slug": "blockchain-futures-forum",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A forward-looking forum exploring the transformative potential of blockchain technology across industries and society.",
     "description": "Blockchain Futures Forum brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-07-08T09:00:00Z",
     "end_time": "2025-07-09T17:00:00Z",
@@ -151,7 +151,7 @@ export const events: SingleEvent[] = [
   {
     "title": "SpaceTech Innovations Day",
     "slug": "spacetech-innovations-day",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A showcase of breakthrough technologies and ventures shaping the future of space exploration, satellite systems, and aerospace innovation.",
     "description": "SpaceTech Innovations Day brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-08-12T09:00:00Z",
     "end_time": "2025-08-12T17:00:00Z",
@@ -172,7 +172,7 @@ export const events: SingleEvent[] = [
   {
     "title": "NextGen Fintech Meetup",
     "slug": "nextgen-fintech-meetup",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A dynamic meetup connecting the next generation of fintech startups, investors, and financial institutions to reimagine the future of finance.",
     "description": "NextGen Fintech Meetup brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-09-10T09:00:00Z",
     "end_time": "2025-09-10T17:00:00Z",
@@ -193,7 +193,7 @@ export const events: SingleEvent[] = [
   {
     "title": "CyberSecure World 2025",
     "slug": "cybersecure-world-2025",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A global event focused on the latest strategies, technologies, and collaborations for building a more secure digital future.",
     "description": "CyberSecure World 2025 brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-10-01T09:00:00Z",
     "end_time": "2025-10-02T17:00:00Z",
@@ -214,7 +214,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Quantum Computing Assembly",
     "slug": "quantum-computing-assembly",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "An exclusive assembly of researchers, developers, and enterprises advancing the frontiers of quantum computing and its real-world applications.",
     "description": "Quantum Computing Assembly brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-08-04T09:00:00Z",
     "end_time": "2025-08-06T17:00:00Z",
@@ -235,7 +235,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Future of Work Expo",
     "slug": "future-of-work-expo",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "An immersive expo exploring how technology, culture, and innovation are redefining the workplace of tomorrow.",
     "description": "Future of Work Expo brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-09-18T09:00:00Z",
     "end_time": "2025-09-19T17:00:00Z",
@@ -256,7 +256,7 @@ export const events: SingleEvent[] = [
   {
     "title": "SaaS Scale-Up Symposium",
     "slug": "saas-scale-up-symposium",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A strategic gathering of SaaS leaders and investors focused on scaling, funding, and accelerating high-growth cloud software ventures.",
     "description": "SaaS Scale-Up Symposium brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-07-25T09:00:00Z",
     "end_time": "2025-07-25T17:00:00Z",
@@ -277,7 +277,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Autonomous Systems Conference",
     "slug": "autonomous-systems-conference",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A comprehensive conference diving into the development and deployment of autonomous technologies across mobility, robotics, and AI.",
     "description": "Autonomous Systems Conference brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-07-15T09:00:00Z",
     "end_time": "2025-07-16T17:00:00Z",
@@ -298,7 +298,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Clean Energy Hackathon",
     "slug": "clean-energy-hackathon",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A high-energy hackathon challenging innovators to develop sustainable tech solutions for a cleaner, greener energy future.",
     "description": "Clean Energy Hackathon brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-08-30T09:00:00Z",
     "end_time": "2025-08-31T17:00:00Z",
@@ -319,7 +319,7 @@ export const events: SingleEvent[] = [
   {
     "title": "XR & Metaverse Experience",
     "slug": "xr-and-metaverse-experience",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "An interactive experience showcasing the latest in extended reality and the evolving metaverse across entertainment, education, and enterprise.",
     "description": "XR & Metaverse Experience brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-09-22T09:00:00Z",
     "end_time": "2025-09-23T17:00:00Z",
@@ -340,7 +340,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Tech4Good Innovation Fair",
     "slug": "tech4good-innovation-fair",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A showcase of technology-driven solutions addressing global challenges in health, education, sustainability, and social impact.",
     "description": "Tech4Good Innovation Fair brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-10-20T09:00:00Z",
     "end_time": "2025-10-21T17:00:00Z",
@@ -361,7 +361,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Smart Cities UK 2025",
     "slug": "smart-cities-uk-2025",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A national forum exploring smart infrastructure, digital governance, and urban innovation shaping the cities of tomorrow.",
     "description": "Smart Cities UK 2025 brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-11-02T09:00:00Z",
     "end_time": "2025-11-03T17:00:00Z",
@@ -382,7 +382,7 @@ export const events: SingleEvent[] = [
   {
     "title": "DevOps Nation Live",
     "slug": "devops-nation-live",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A live gathering of DevOps professionals and teams sharing tools, practices, and culture to drive continuous delivery and innovation.",
     "description": "DevOps Nation Live brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-11-15T09:00:00Z",
     "end_time": "2025-11-16T17:00:00Z",
@@ -403,7 +403,7 @@ export const events: SingleEvent[] = [
   {
     "title": "GovTech & Public Innovation",
     "slug": "govtech-public-innovation",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A platform connecting government leaders, technologists, and civic innovators to modernize public services and drive policy innovation.",
     "description": "GovTech & Public Innovation brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-11-28T09:00:00Z",
     "end_time": "2025-11-28T17:00:00Z",
@@ -424,7 +424,7 @@ export const events: SingleEvent[] = [
   {
     "title": "AgriTech Disruption Conference",
     "slug": "agritech-disruption-conference",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A conference spotlighting disruptive technologies transforming agriculture, food systems, and rural economies.",
     "description": "AgriTech Disruption Conference brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-10-11T16:00:00Z",
     "end_time": "2025-10-11T20:00:00Z",
@@ -445,7 +445,7 @@ export const events: SingleEvent[] = [
   {
     "title": "Edge Computing UK Forum",
     "slug": "edge-computing-uk-forum",
-    "event_overview": "An exciting event focused on innovation and technology in its respective field.",
+    "event_overview": "A focused forum examining the rise of edge computing and its impact on connectivity, data processing, and real-time innovation in the UK.",
     "description": "Edge Computing UK Forum brings together professionals, experts, and enthusiasts to explore the latest trends, developments, and opportunities in the field. Attend keynotes, panels, and networking sessions designed to inspire and connect the community.",
     "start_time": "2025-12-12T09:00:00Z",
     "end_time": "2025-12-12T17:00:00Z",
