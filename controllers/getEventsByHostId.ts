@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const selectEventsByHostId = require("../models/selectEventsByHostUsername");
+const selectEventsByHostId = require("../models/selectEventsByHostId");
 
 const getEventsByHostId = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { user_id } = request.params;
