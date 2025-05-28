@@ -31,10 +31,10 @@ describe("GET /api/events", () => {
         return request(app)
         .get("/api/events")
         .expect(200)
-        .then(({ body } : { body:Array<object> } ) => {
-            expect(Array.isArray(body)).toBe(true);
-            expect(body.length).toBe(4);
-            body.forEach((event) => {
+        .then(({ body: { events } } : { body: CustomResponse }) => {
+            expect(Array.isArray(events)).toBe(true);
+            expect(events.length).toBe(4);
+            events.forEach((event) => {
                 expect(event).toHaveProperty("event_id", expect.any(Number));
                 expect(event).toHaveProperty("title", expect.any(String));
                 expect(event).toHaveProperty("slug", expect.any(String));
@@ -57,37 +57,9 @@ describe("GET /api/events", () => {
                 expect(event).toHaveProperty("last_updated_at", expect.any(String));
                 expect(Object.entries(event).length).toBe(20);
             });
-        })
-        // .then(({ body: { events } } : { body: CustomResponse }) => {
-            // console.log(body, "<--- body")
-            // expect(Array.isArray(events)).toBe(true);
-            // expect(events.length).toBe(4);
-            // events.forEach((event) => {
-            //     expect(event).toHaveProperty("event_id", expect.any(Number));
-            //     expect(event).toHaveProperty("title", expect.any(String));
-            //     expect(event).toHaveProperty("slug", expect.any(String));
-            //     expect(event).toHaveProperty("event_overview", expect.any(String));
-            //     expect(event).toHaveProperty("description", expect.any(String));
-            //     expect(event).toHaveProperty("start_time", expect.any(String));
-            //     expect(event).toHaveProperty("end_time", expect.any(String));
-            //     expect(event).toHaveProperty("timezone", expect.any(String));
-            //     expect(event).toHaveProperty("venue_id", expect.any(Number));
-            //     expect(event).toHaveProperty("is_online", expect.any(Boolean));
-            //     expect(event).toHaveProperty("host_id", expect.any(Number));
-            //     expect(event).toHaveProperty("event_type", expect.any(String));
-            //     expect(event).toHaveProperty("capacity", expect.any(Number));
-            //     expect(event).toHaveProperty("attendees_count", expect.any(Number));
-            //     expect(event).toHaveProperty("is_free", expect.any(Boolean));
-            //     expect(event).toHaveProperty("price", expect.any(Number));
-            //     expect(event).toHaveProperty("event_image_url", expect.any(String));
-            //     expect(event).toHaveProperty("is_published", expect.any(Boolean));
-            //     expect(event).toHaveProperty("created_at", expect.any(String));
-            //     expect(event).toHaveProperty("last_updated_at", expect.any(String));
-            //     expect(Object.entries(event).length).toBe(20);
-            // });
-        // });
+        });
     });
-    describe.skip("Queries", () => {
+    describe("Queries", () => {
         describe("sort_by", () => {
             test("200: responds with a sorted array of event objects by a valid column with an appropriate status code", () => {
                 return request(app)
@@ -245,7 +217,7 @@ describe("GET /api/events", () => {
             });
         });
     });
-    describe.skip("Pagination", () => {
+    describe("Pagination", () => {
         describe("limit", () => {
             test("200: responds with an array of event objects according to the 'limit' query, as well as an appropriate status code", () => {
                 return request(app)
