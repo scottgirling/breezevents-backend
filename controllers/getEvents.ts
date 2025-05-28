@@ -14,7 +14,7 @@ const getEvents = (request: CustomRequest, response: CustomResponse, next: NextF
 
     selectEvents(sort_by, order, tag, is_online, is_free, limit, p)
     .then((events: Array<object>) => {
-        response.status(200).send(events);
+        response.status(200).send({ events });
     })
     .catch((error: Error) => {
         next(error);
