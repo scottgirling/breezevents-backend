@@ -218,10 +218,10 @@
             "last_updated_at": "2025-05-12T14:00:00Z"
         }
     },
-    "GET /api/events/host/:username" : {
+    "GET /api/events/host/:user_id" : {
         "description": "serves an array of event objects according to the event host",
         "queries": [],
-        "examplePath": "/api/events/host/ahmedben96",
+        "examplePath": "/api/events/host/2",
         "exampleResponse": [
             {
                 "event_id": 1,
@@ -404,10 +404,10 @@
             "last_updated_at": "2025-05-10T10:00:00.000Z"
         }
     },
-    "GET /api/users/:username": {
+    "GET /api/users/:user_id": {
         "description": "serves an individual user object",
         "queries": [],
-        "examplePath": "/api/users/alice_thompson123",
+        "examplePath": "/api/users/1",
         "exampleResponse": {
             "user_id": 1,
             "name": "Alice Thompson",
@@ -421,10 +421,10 @@
             "avatar_url": "https://example.com/avatars/alice.jpg"
         }
     },
-    "GET /api/:username/events": {
+    "GET /api/:user_id/events": {
         "description": "serves an array of event objects illustrating the events that a user has signed up for",
         "queries": [],
-        "examplePath": "/api/alice_thompson123/events",
+        "examplePath": "/api/1/events",
         "exampleResponse": [
             {
                 "event_id": 1,
