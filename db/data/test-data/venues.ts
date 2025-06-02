@@ -31,8 +31,8 @@ export const venues: Venue[] = [
     "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
     "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
     "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
-    "created_at": "2025-05-01T09:00:00Z",
-    "last_updated_at": "2025-05-10T10:00:00Z"
+    "created_at": "2025-05-01T09:00:00.000Z",
+    "last_updated_at": "2025-05-10T10:00:00.000Z"
   },
   {
     "venue_name": "Manchester Central",
@@ -48,8 +48,8 @@ export const venues: Venue[] = [
     "parking_info": "Underground parking for 720 vehicles, accessible parking available.",
     "image_gallery": ["https://example.com/images/mc1.jpg", "https://example.com/images/mc2.jpg"],
     "nearby_transport": "2-minute walk from Deansgate-Castlefield Metrolink, close to Manchester Oxford Road station",
-    "created_at": "2025-04-25T08:30:00Z",
-    "last_updated_at": "2025-05-08T12:45:00Z"
+    "created_at": "2025-04-25T08:30:00.000Z",
+    "last_updated_at": "2025-05-08T12:45:00.000Z"
   },
   {
     "venue_name": "SEC Centre",
@@ -65,7 +65,7 @@ export const venues: Venue[] = [
     "parking_info": "Multistorey parking for 1600 cars, electric vehicle charging available.",
     "image_gallery": ["https://example.com/images/sec1.jpg", "https://example.com/images/sec2.jpg"],
     "nearby_transport": "Next to Exhibition Centre railway station, buses from city centre stop nearby",
-    "created_at": "2025-04-20T07:15:00Z",
-    "last_updated_at": "2025-05-09T11:20:00Z"
+    "created_at": "2025-04-20T07:15:00.000Z",
+    "last_updated_at": "2025-05-09T11:20:00.000Z"
   }
 ]
