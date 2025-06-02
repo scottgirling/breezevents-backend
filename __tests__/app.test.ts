@@ -415,6 +415,52 @@ describe("GET /api/venues", () => {
     });
 });
 
+describe("GET /api/venues/:venue_id", () => {
+    test("200: responds with an individual venue objects, with the appropriate properties and status code", () => {
+        return request(app)
+        .get("/api/venues/1")
+        .expect(200)
+        .then(({ body: { venue } } : { body: CustomResponse }) => {
+            const expectedOutput = {
+                "venue_id": 1,
+                "venue_name": "ExCeL London",
+                "venue_type": "Convention Centre",
+                "location": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK",
+                "capacity": 5000,
+                "facilities": ["Wi-Fi", "Parking", "Food Courts", "Conference Rooms", "Accessibility"],
+                "contact_email": "info@excel.london",
+                "contact_phone": "+44 20 7093 3000",
+                "website_url": "https://www.excel.london",
+                "event_types": ["Conferences", "Expos", "Trade Shows"],
+                "accessibility_features": ["Wheelchair Access", "Hearing Impaired Services", "Elevators"],
+                "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
+                "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
+                "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
+                "created_at": "2025-05-01T09:00:00.000Z",
+                "last_updated_at": "2025-05-10T10:00:00.000Z"
+            }
+            expect(venue).toMatchObject(expectedOutput);
+            expect(Object.entries(venue).length).toBe(16);
+        });
+    });
+    test("400: responds with an appropriate status code and error message when passed an invalid id", () => {
+        return request(app)
+        .get("/api/venues/seven")
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid data type.");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when passed a valid but non-existent id", () => {
+        return request(app)
+        .get("/api/venues/34")
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Venue not found.");
+        });
+    });
+});
+
 describe("GET /api/users/:user_id", () => {
     test("200: responds with an individual user object, with the appropriate properties and status code", () => {
         return request(app)
