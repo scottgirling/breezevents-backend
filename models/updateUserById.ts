@@ -6,7 +6,7 @@ const updateUserById = (user_id: number, name: string, username: string, email: 
     .then(() => {
         let queryValues = [];
     
-        let sqlQuery = "UPDATE users SET last_updated_at = CURRENT_TIMESTAMP";
+        let sqlQuery = "UPDATE users SET user_last_updated_at = CURRENT_TIMESTAMP";
     
         if (name) {
             queryValues.push(name);
