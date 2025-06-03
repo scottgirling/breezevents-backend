@@ -192,7 +192,7 @@
         ]
     },
     "GET /api/events/:event_id": {
-        "description": "serves an individual event object",
+        "description": "serves an individual event object, returning relevant columns from the 'venues' and 'users' tables too",
         "queries": [],
         "examplePath": "/api/events/1",
         "exampleResponse": {
@@ -214,8 +214,26 @@
             "price": 180.00,
             "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
             "is_published": true,
-            "created_at": "2025-05-10T10:00:00Z",
-            "last_updated_at": "2025-05-12T14:00:00Z"
+            "created_at": "2025-05-10T10:00:00.000Z",
+            "last_updated_at": "2025-05-12T14:00:00.000Z",
+            "venue_name": "ExCeL London",
+            "venue_type": "Convention Centre",
+            "location": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK",
+            "venue_capacity": 5000,
+            "facilities": ["Wi-Fi", "Parking", "Food Courts", "Conference Rooms", "Accessibility"],
+            "contact_email": "info@excel.london",
+            "contact_phone": "+44 20 7093 3000",
+            "website_url": "https://www.excel.london",
+            "event_types": ["Conferences", "Expos", "Trade Shows"],
+            "accessibility_features": ["Wheelchair Access", "Hearing Impaired Services", "Elevators"],
+            "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
+            "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
+            "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
+            "venue_created_at": "2025-05-01T09:00:00.000Z",
+            "venue_last_updated_at": "2025-05-10T10:00:00.000Z",
+            "name": "Ben Ahmed",
+            "email": "ben.ahmed@example.com",
+            "bio": "Event organizer and tech community advocate."
         }
     },
     "GET /api/events/host/:user_id" : {

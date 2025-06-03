@@ -5,7 +5,7 @@ export const venues: Venue[] = [
     "venue_name": "ExCeL London",
     "venue_type": "Convention Centre",
     "location": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK",
-    "capacity": 5000,
+    "venue_capacity": 5000,
     "facilities": ["Wi-Fi", "Parking", "Food Courts", "Conference Rooms", "Accessibility"],
     "contact_email": "info@excel.london",
     "contact_phone": "+44 20 7093 3000",
@@ -15,14 +15,14 @@ export const venues: Venue[] = [
     "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
     "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
     "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
-    "created_at": "2025-05-01T09:00:00Z",
-    "last_updated_at": "2025-05-10T10:00:00Z"
+    "venue_created_at": "2025-05-01T09:00:00Z",
+    "venue_last_updated_at": "2025-05-10T10:00:00Z"
   },
   {
     "venue_name": "Manchester Central",
     "venue_type": "Exhibition and Conference Centre",
     "location": "Windmill St, Manchester M2 3GX, UK",
-    "capacity": 10000,
+    "venue_capacity": 10000,
     "facilities": ["Wi-Fi", "Parking", "Restaurants", "Breakout Rooms", "Accessibility"],
     "contact_email": "info@manchestercentral.co.uk",
     "contact_phone": "+44 161 834 2700",
@@ -32,14 +32,14 @@ export const venues: Venue[] = [
     "parking_info": "Underground parking for 720 vehicles, accessible parking available.",
     "image_gallery": ["https://example.com/images/mc1.jpg", "https://example.com/images/mc2.jpg"],
     "nearby_transport": "2-minute walk from Deansgate-Castlefield Metrolink, close to Manchester Oxford Road station",
-    "created_at": "2025-04-25T08:30:00Z",
-    "last_updated_at": "2025-05-08T12:45:00Z"
+    "venue_created_at": "2025-04-25T08:30:00Z",
+    "venue_last_updated_at": "2025-05-08T12:45:00Z"
   },
   {
     "venue_name": "SEC Centre",
     "venue_type": "Event Campus",
     "location": "Exhibition Way, Glasgow G3 8YW, UK",
-    "capacity": 12000,
+    "venue_capacity": 12000,
     "facilities": ["Wi-Fi", "On-site Catering", "Green Rooms", "Conference Halls", "Accessibility"],
     "contact_email": "info@sec.co.uk",
     "contact_phone": "+44 141 248 3000",
@@ -49,14 +49,14 @@ export const venues: Venue[] = [
     "parking_info": "Multistorey parking for 1600 cars, electric vehicle charging available.",
     "image_gallery": ["https://example.com/images/sec1.jpg", "https://example.com/images/sec2.jpg"],
     "nearby_transport": "Next to Exhibition Centre railway station, buses from city centre stop nearby",
-    "created_at": "2025-04-20T07:15:00Z",
-    "last_updated_at": "2025-05-09T11:20:00Z"
+    "venue_created_at": "2025-04-20T07:15:00Z",
+    "venue_last_updated_at": "2025-05-09T11:20:00Z"
   },
   {
     "venue_name": "Birmingham NEC",
     "venue_type": "Exhibition Centre",
     "location": "North Ave, Birmingham B40 1NT, UK",
-    "capacity": 18000,
+    "venue_capacity": 18000,
     "facilities": ["Wi-Fi", "Parking", "Restaurants", "Conference Rooms", "Accessibility"],
     "contact_email": "info@nec.co.uk",
     "contact_phone": "+44 121 780 4141",
@@ -66,14 +66,14 @@ export const venues: Venue[] = [
     "parking_info": "Over 16,000 parking spaces onsite with electric vehicle charging stations.",
     "image_gallery": ["https://example.com/images/nec1.jpg", "https://example.com/images/nec2.jpg"],
     "nearby_transport": "Adjacent to Birmingham International Railway Station, shuttle buses available",
-    "created_at": "2025-05-12T10:00:00Z",
-    "last_updated_at": "2025-05-20T15:00:00Z"
+    "venue_created_at": "2025-05-12T10:00:00Z",
+    "venue_last_updated_at": "2025-05-20T15:00:00Z"
   },
   {
     "venue_name": "The O2 Arena",
     "venue_type": "Arena",
     "location": "Peninsula Square, Greenwich, London SE10 0DX, UK",
-    "capacity": 20000,
+    "venue_capacity": 20000,
     "facilities": ["Wi-Fi", "Parking", "Restaurants", "VIP Lounges", "Accessibility"],
     "contact_email": "info@theo2.co.uk",
     "contact_phone": "+44 20 8463 2000",
@@ -83,14 +83,14 @@ export const venues: Venue[] = [
     "parking_info": "Parking available nearby with 2500 spaces, shuttle services provided on event days.",
     "image_gallery": ["https://example.com/images/o2arena1.jpg", "https://example.com/images/o2arena2.jpg"],
     "nearby_transport": "5-minute walk from North Greenwich Tube Station",
-    "created_at": "2025-05-07T11:30:00Z",
-    "last_updated_at": "2025-05-15T16:00:00Z"
+    "venue_created_at": "2025-05-07T11:30:00Z",
+    "venue_last_updated_at": "2025-05-15T16:00:00Z"
   },
   {
     "venue_name": "Edinburgh International Conference Centre",
     "venue_type": "Conference Centre",
     "location": "The Exchange, Edinburgh EH3 8EE, UK",
-    "capacity": 2500,
+    "venue_capacity": 2500,
     "facilities": ["Wi-Fi", "Parking", "Cafeterias", "Breakout Rooms", "Accessibility"],
     "contact_email": "info@eicc.co.uk",
     "contact_phone": "+44 131 300 3000",
@@ -100,7 +100,7 @@ export const venues: Venue[] = [
     "parking_info": "Limited on-site parking with additional parking in nearby garages.",
     "image_gallery": ["https://example.com/images/eicc1.jpg", "https://example.com/images/eicc2.jpg"],
     "nearby_transport": "10-minute walk from Haymarket Railway Station, bus stops nearby",
-    "created_at": "2025-05-10T09:00:00Z",
-    "last_updated_at": "2025-05-18T14:00:00Z"
+    "venue_created_at": "2025-05-10T09:00:00Z",
+    "venue_last_updated_at": "2025-05-18T14:00:00Z"
   }
 ]

@@ -284,7 +284,7 @@ describe("GET /api/events", () => {
 });
 
 describe("GET /api/events/:event_id", () => {
-    test("200: responds with an individual event object, with the appropriate properties and status code", () => {
+    test("200: responds with an individual event object, with the appropriate properties (including from the venues and users tables) and status code", () => {
         return request(app)
         .get("/api/events/1")
         .expect(200)
@@ -309,10 +309,28 @@ describe("GET /api/events/:event_id", () => {
                 "event_image_url": "https://example.co.uk/images/uktechexpo2025.jpg",
                 "is_published": true,
                 "created_at": "2025-05-10T10:00:00.000Z",
-                "last_updated_at": "2025-05-12T14:00:00.000Z"
-            };
+                "last_updated_at": "2025-05-12T14:00:00.000Z",
+                "venue_name": "ExCeL London",
+                "venue_type": "Convention Centre",
+                "location": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK",
+                "venue_capacity": 5000,
+                "facilities": ["Wi-Fi", "Parking", "Food Courts", "Conference Rooms", "Accessibility"],
+                "contact_email": "info@excel.london",
+                "contact_phone": "+44 20 7093 3000",
+                "website_url": "https://www.excel.london",
+                "event_types": ["Conferences", "Expos", "Trade Shows"],
+                "accessibility_features": ["Wheelchair Access", "Hearing Impaired Services", "Elevators"],
+                "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
+                "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
+                "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
+                "venue_created_at": "2025-05-01T09:00:00.000Z",
+                "venue_last_updated_at": "2025-05-10T10:00:00.000Z",
+                "name": "Ben Ahmed",
+                "email": "ben.ahmed@example.com",
+                "bio": "Event organizer and tech community advocate."
+            }
             expect(event).toMatchObject(expectedOutput);
-            expect(Object.entries(event).length).toBe(20);
+            expect(Object.entries(event).length).toBe(38);
         });
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent id", () => {
@@ -397,7 +415,7 @@ describe("GET /api/venues", () => {
                 expect(venue).toHaveProperty("venue_name", expect.any(String));
                 expect(venue).toHaveProperty("venue_type", expect.any(String));
                 expect(venue).toHaveProperty("location", expect.any(String));
-                expect(venue).toHaveProperty("capacity", expect.any(Number));
+                expect(venue).toHaveProperty("venue_capacity", expect.any(Number));
                 expect(venue).toHaveProperty("facilities", expect.any(Array));
                 expect(venue).toHaveProperty("contact_email", expect.any(String));
                 expect(venue).toHaveProperty("contact_phone", expect.any(String));
@@ -407,8 +425,8 @@ describe("GET /api/venues", () => {
                 expect(venue).toHaveProperty("parking_info", expect.any(String));
                 expect(venue).toHaveProperty("image_gallery", expect.any(Array));
                 expect(venue).toHaveProperty("nearby_transport", expect.any(String));
-                expect(venue).toHaveProperty("created_at", expect.any(String));
-                expect(venue).toHaveProperty("last_updated_at", expect.any(String));
+                expect(venue).toHaveProperty("venue_created_at", expect.any(String));
+                expect(venue).toHaveProperty("venue_last_updated_at", expect.any(String));
                 expect(Object.entries(venue).length).toBe(16);
             });
         });
@@ -426,7 +444,7 @@ describe("GET /api/venues/:venue_id", () => {
                 "venue_name": "ExCeL London",
                 "venue_type": "Convention Centre",
                 "location": "Royal Victoria Dock, 1 Western Gateway, London E16 1XL, UK",
-                "capacity": 5000,
+                "venue_capacity": 5000,
                 "facilities": ["Wi-Fi", "Parking", "Food Courts", "Conference Rooms", "Accessibility"],
                 "contact_email": "info@excel.london",
                 "contact_phone": "+44 20 7093 3000",
@@ -436,8 +454,8 @@ describe("GET /api/venues/:venue_id", () => {
                 "parking_info": "On-site parking for 1000 cars, 500 bike racks available.",
                 "image_gallery": ["https://example.com/images/excel1.jpg", "https://example.com/images/excel2.jpg"],
                 "nearby_transport": "5-minute walk from Custom House DLR Station, direct buses from Central London",
-                "created_at": "2025-05-01T09:00:00.000Z",
-                "last_updated_at": "2025-05-10T10:00:00.000Z"
+                "venue_created_at": "2025-05-01T09:00:00.000Z",
+                "venue_last_updated_at": "2025-05-10T10:00:00.000Z"
             }
             expect(venue).toMatchObject(expectedOutput);
             expect(Object.entries(venue).length).toBe(16);
@@ -474,8 +492,8 @@ describe("GET /api/users/:user_id", () => {
                 "email": "alice.thompson@example.com",
                 "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
                 "role": "attendee",
-                "created_at": "2025-05-01T09:00:00.000Z",
-                "last_updated_at": "2025-05-10T10:00:00.000Z",
+                "user_created_at": "2025-05-01T09:00:00.000Z",
+                "user_last_updated_at": "2025-05-10T10:00:00.000Z",
                 "bio": "Tech enthusiast. Always looking for new innovative solutions.",
                 "avatar_url": "https://example.com/avatars/alice.jpg"
             });
@@ -831,12 +849,12 @@ describe("PATCH /api/users/:user_id", () => {
                 "email": "alice.thompson@example.com",
                 "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
                 "role": "attendee",
-                "created_at": "2025-05-01T09:00:00.000Z",
+                "user_created_at": "2025-05-01T09:00:00.000Z",
                 "bio": "I LOVE TECH! Always looking to meet cool tech peeps!",
                 "avatar_url": "https://example.com/avatars/alice.jpg"
             }
             expect(user).toMatchObject(expectedOutput);
-            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+            expect(user).toHaveProperty("user_last_updated_at", expect.any(String));
         });
     });
     test("200: responds with an updated user object when multiple user columns are amended, as well as an appropriate status code", () => {
@@ -859,12 +877,12 @@ describe("PATCH /api/users/:user_id", () => {
                 "email": "scott@yahoo.com",
                 "password_hash": "password_hash",
                 "role": "attendee",
-                "created_at": "2025-05-01T09:00:00.000Z",
+                "user_created_at": "2025-05-01T09:00:00.000Z",
                 "bio": "A software developer looking to find cool tech events near me!",
                 "avatar_url": "https://example.com/avatars/scott.jpg"
             }
             expect(user).toMatchObject(expectedOutput);
-            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+            expect(user).toHaveProperty("user_last_updated_at", expect.any(String));
         });
     });
     test("400: responds with an appropriate status code and error message when the request body does not contain any fields", () => {
@@ -1070,8 +1088,8 @@ describe("POST /api/users", () => {
             expect(user).toHaveProperty("bio", "A software developer looking to find cool tech events near me!");
             expect(user).toHaveProperty("avatar_url", null);
             expect(user).toHaveProperty("role", "attendee");
-            expect(user).toHaveProperty("created_at", expect.any(String));
-            expect(user).toHaveProperty("last_updated_at", expect.any(String));
+            expect(user).toHaveProperty("user_created_at", expect.any(String));
+            expect(user).toHaveProperty("user_last_updated_at", expect.any(String));
             expect(Object.entries(user).length).toBe(10);
         });
     });

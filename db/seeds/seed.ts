@@ -38,7 +38,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
             venue_name VARCHAR NOT NULL,
             venue_type VARCHAR,
             location VARCHAR NOT NULL,
-            capacity INT,
+            venue_capacity INT,
             facilities TEXT[],
             contact_email VARCHAR NOT NULL,
             contact_phone VARCHAR NOT NULL,
@@ -48,8 +48,8 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
             parking_info VARCHAR,
             image_gallery TEXT[],
             nearby_transport VARCHAR,
-            created_at TIMESTAMP DEFAULT NOW(),
-            last_updated_at TIMESTAMP DEFAULT NOW()
+            venue_created_at TIMESTAMP DEFAULT NOW(),
+            venue_last_updated_at TIMESTAMP DEFAULT NOW()
         )`)
 
         const usersTablePromise = db.query(`CREATE TABLE users (
@@ -61,8 +61,8 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
             bio TEXT,
             avatar_url VARCHAR,
             role VARCHAR NOT NULL,
-            created_at TIMESTAMP DEFAULT NOW(),
-            last_updated_at TIMESTAMP DEFAULT NOW()
+            user_created_at TIMESTAMP DEFAULT NOW(),
+            user_last_updated_at TIMESTAMP DEFAULT NOW()
         )`)
 
         return Promise.all([tagsTablePromise, venuesTablePromise, usersTablePromise]);
@@ -117,12 +117,12 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         const tagsPromise = db.query(insertTagsQueryString);
         
         const insertVenuesQueryString = format(
-            `INSERT INTO venues (venue_name, venue_type, location, capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, created_at, last_updated_at) VALUES %L`, venueData.map(({ venue_name, venue_type, location, capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, created_at, last_updated_at }) => [venue_name, venue_type, location, capacity, (`{${facilities}}`), contact_email, contact_phone, website_url, (`{${event_types}}`), (`{${accessibility_features}}`), parking_info, (`{${image_gallery}}`), nearby_transport, created_at, last_updated_at])
+            `INSERT INTO venues (venue_name, venue_type, location, venue_capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, venue_created_at, venue_last_updated_at) VALUES %L`, venueData.map(({ venue_name, venue_type, location, venue_capacity, facilities, contact_email, contact_phone, website_url, event_types, accessibility_features, parking_info, image_gallery, nearby_transport, venue_created_at, venue_last_updated_at }) => [venue_name, venue_type, location, venue_capacity, (`{${facilities}}`), contact_email, contact_phone, website_url, (`{${event_types}}`), (`{${accessibility_features}}`), parking_info, (`{${image_gallery}}`), nearby_transport, venue_created_at, venue_last_updated_at])
         )
         const venuesPromise = db.query(insertVenuesQueryString);
 
         const insertUsersQueryString = format(
-            `INSERT INTO users (name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url }) => [name, username, email, password_hash, role, created_at, last_updated_at, bio, avatar_url])
+            `INSERT INTO users (name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url }) => [name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url])
         )
         const usersPromise = db.query(insertUsersQueryString);
 
