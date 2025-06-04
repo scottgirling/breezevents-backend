@@ -11,6 +11,7 @@ export interface CustomResponse extends Response {
     userEvent: object;
     venues: Array<object>;
     venue: object;
+    redirect: any;
 }
 
 export interface CustomRequest extends Request {
