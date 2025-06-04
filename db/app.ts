@@ -22,7 +22,7 @@ app.use(express.json());
 app.use("/api", apiRouter);
 
 app.post("/create-checkout-session", async (request: CustomRequest, response: Response) => {
-    // const { events } = request.body;
+    const { event, ticketQuantity } = request.body;
 
     // const lineItems = events.map((event: any) => {
     //     price_data: {
@@ -49,16 +49,16 @@ app.post("/create-checkout-session", async (request: CustomRequest, response: Re
                     price_data: {
                         currency: "gbp",
                         product_data: {
-                            name: "Ticket"
+                            name: event.title
                         },
-                        unit_amount: 1000
+                        unit_amount: Math.round(event.price * 100)
                     },
-                    quantity: 1
+                    quantity: ticketQuantity
                 }
             ],
             mode: "payment",
             success_url: "http://localhost:5173/success",
-            cancel_url: "http://localhost:5173/cancel"
+            cancel_url: "http://localhost:5173/events"
         })
     
         response.json({ url: session.url });
