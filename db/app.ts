@@ -1,5 +1,6 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse, CustomError } from "../controllers/interfaces/types";
+import { Response } from "express";
 // const createCheckoutSession = require("../controllers/createCheckoutSession");
 
 require("dotenv").config({
@@ -20,7 +21,7 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
-app.post("/create-checkout-session", async (request: CustomRequest, response: CustomResponse) => {
+app.post("/create-checkout-session", async (request: CustomRequest, response: Response) => {
     // const { events } = request.body;
 
     // const lineItems = events.map((event: any) => {
@@ -41,18 +42,22 @@ app.post("/create-checkout-session", async (request: CustomRequest, response: Cu
     //     cancel_url: "http://localhost:5173?canceled=true"
     // })
 
-    const session = await stripe.checkout.sessions.create({
-        line_items: [
-            {
-                price: 10
-            }
-        ],
-        mode: "payment",
-        success_url: "http://localhost:5173?success=true",
-        cancel_url: "http://localhost:5173?canceled=true"
-    })
-
-    response.redirect(303, session.url);
+    try {
+        const session = await stripe.checkout.sessions.create({
+            line_items: [
+                {
+                    price: 10
+                }
+            ],
+            mode: "payment",
+            success_url: "http://localhost:5173/success",
+            cancel_url: "http://localhost:5173/cancel"
+        })
+    
+        response.json({ url: session.url });
+    } catch (err) {
+        console.error("Error creating checkout session", err);
+    }
 })
 
 app.use((error: CustomError, request: CustomRequest, response: CustomResponse, next: NextFunction) => {
