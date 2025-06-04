@@ -46,7 +46,9 @@ app.post("/create-checkout-session", async (request: CustomRequest, response: Re
         const session = await stripe.checkout.sessions.create({
             line_items: [
                 {
-                    price: 10
+                    price_data: {
+                        unit_amount: 10
+                    }
                 }
             ],
             mode: "payment",
