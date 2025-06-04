@@ -47,8 +47,13 @@ app.post("/create-checkout-session", async (request: CustomRequest, response: Re
             line_items: [
                 {
                     price_data: {
-                        unit_amount: 10
-                    }
+                        currency: "gbp",
+                        product_data: {
+                            name: "Ticket"
+                        },
+                        unit_amount: 1000
+                    },
+                    quantity: 1
                 }
             ],
             mode: "payment",
