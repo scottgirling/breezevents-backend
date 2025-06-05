@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { NextFunction } from "express";
 import { CustomRequest, CustomResponse, CustomError } from "../controllers/interfaces/types";
 
 const express = require("express");
@@ -6,12 +6,13 @@ const app = express();
 
 const cors = require("cors");
 const apiRouter = require("./routes/api-router");
+const webhookRouter = require("./routes/webhook-router");
 
 app.use(express.static("public"));
 app.use(cors());
-app.use(express.json());
 
-app.use("/api", apiRouter);
+app.use("/api", express.json(), apiRouter);
+app.use("/webhook", webhookRouter);
 
 app.use((error: CustomError, request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     if (error.status && error.msg) {
