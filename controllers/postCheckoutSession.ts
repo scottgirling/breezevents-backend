@@ -42,7 +42,7 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             user_id
         },
         mode: "payment",
-        success_url: "http://localhost:5173/success",
+        success_url: "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: "http://localhost:5173/events"
     })
     .then((session: any) => {
