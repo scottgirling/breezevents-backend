@@ -9,8 +9,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 if (!stripe) throw new Error("STRIPE_SECRET_KEY is missing.");
 
-
-
 const postCheckoutSession = (request: CustomRequest, response: Response, next: NextFunction) => {
     const { event, ticketQuantity } = request.body;
 
@@ -28,7 +26,7 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             }
         ],
         metadata: {
-            event,
+            event: JSON.stringify(event),
             ticketQuantity
         },
         mode: "payment",
