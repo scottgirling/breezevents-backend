@@ -16,12 +16,13 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             event_id: number,
             title: string,
             price: number,
+            start_time: string
         },
         ticketQuantity: number,
         user_id: number
     }
 
-    const { event_id, title, price } = event;
+    const { event_id, title, price, start_time } = event;
 
     stripe.checkout.sessions.create({
         line_items: [
@@ -37,7 +38,7 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             }
         ],
         metadata: {
-            eventDetails: JSON.stringify({ event_id, title, price }),
+            eventDetails: JSON.stringify({ event_id, title, price, start_time }),
             ticketQuantity,
             user_id
         },
