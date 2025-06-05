@@ -26,8 +26,10 @@ const postWebhook = async (request: Request, response: Response, next: NextFunct
 
     if (event.type === "checkout.session.completed") {
         const session = event.data.object as Stripe.Checkout.Session;
-        const eventDetails: any = session.metadata?.event;
-        const ticketQuantity: any = session.metadata?.ticketQuantity;
+
+        const rawEventDetails = session.metadata?.eventDetails;
+        const eventDetails = rawEventDetails && JSON.parse(rawEventDetails);
+        const ticketQuantity = session.metadata?.ticketQuantity;
 
         if (!eventDetails || !ticketQuantity) {
             console.error("Missing metadata on session.");
