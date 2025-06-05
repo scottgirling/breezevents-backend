@@ -20,15 +20,17 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
         ticketQuantity: number
     }
 
+    const { event_id, title, price } = event;
+
     stripe.checkout.sessions.create({
         line_items: [
             {
                 price_data: {
                     currency: "gbp",
                     product_data: {
-                        name: event.title
+                        name: title
                     },
-                    unit_amount: Math.round(event.price * 100)
+                    unit_amount: Math.round(price * 100)
                 },
                 quantity: ticketQuantity
             }
