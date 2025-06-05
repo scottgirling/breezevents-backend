@@ -12,7 +12,7 @@ const getSession = async (request: Request, response: Response) => {
     const { session_id } = request.query;
 
     try {
-        const session = await stripe.checkout.retrieve(session_id);
+        const session = await stripe.checkout.sessions.retrieve(session_id);
         response.json(session);
     } catch (error) {
         console.error("Error retrieving session ID:", error);
