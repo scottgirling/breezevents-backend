@@ -30,6 +30,7 @@ const postWebhook = async (request: Request, response: Response, next: NextFunct
         const rawEventDetails = session.metadata?.eventDetails;
         const eventDetails = rawEventDetails && JSON.parse(rawEventDetails);
         const ticketQuantity = session.metadata?.ticketQuantity;
+        const userId = session.metadata?.user_id;
 
         if (!eventDetails || !ticketQuantity) {
             console.error("Missing metadata on session.");
@@ -41,9 +42,21 @@ const postWebhook = async (request: Request, response: Response, next: NextFunct
                 attendeeCountChange: ticketQuantity
             });
 
-            console.log(`Attendee count updated for event ${eventDetails.event_id}, ${eventDetails.title}`);
+            console.log(`Attendee count updated for event ${eventDetails.event_id}, ${eventDetails.title}.`);
         } catch (error) {
             console.error("Failed to update event:", error);
+            return response.status(500).send("Database update failed.");
+        }
+
+        try {
+            await axios.post("https://events-platform-be-1fmx.onrender.com/api/user_events", {
+                user_id: userId,
+                event_id: eventDetails.event_id
+            });
+
+            console.log(`New row added for user ${userId}: event ${eventDetails.event_id}.`);
+        } catch (error) {
+            console.error("Failed to post new row:", error);
             return response.status(500).send("Database update failed.");
         }
     }
