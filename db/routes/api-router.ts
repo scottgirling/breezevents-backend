@@ -7,6 +7,7 @@ const userEventsRouter = require("./user_events-router");
 const usersRouter = require("./users-router");
 const venuesRouter = require("./venues-router");
 const stripeRouter = require("./stripe-router");
+const sessionRouter = require("./session-router");
 
 apiRouter.use("/events", eventsRouter);
 apiRouter.use("/tags", tagsRouter);
@@ -14,6 +15,7 @@ apiRouter.use("/user_events", userEventsRouter);
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/venues", venuesRouter);
 apiRouter.use("/create-checkout-session", stripeRouter);
+apiRouter.use("/retrieve-session", sessionRouter);
 
 apiRouter.get("/", getEndpoints);
 
