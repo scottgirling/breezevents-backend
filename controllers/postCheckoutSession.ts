@@ -36,7 +36,7 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             }
         ],
         metadata: {
-            eventDetails: JSON.stringify(event),
+            eventDetails: JSON.stringify({ event_id, title, price }),
             ticketQuantity
         },
         mode: "payment",
