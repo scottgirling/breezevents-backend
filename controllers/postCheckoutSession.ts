@@ -11,13 +11,14 @@ if (!stripe) throw new Error("STRIPE_SECRET_KEY is missing.");
 
 const postCheckoutSession = (request: CustomRequest, response: Response, next: NextFunction) => {
 
-    const { event, ticketQuantity } = request.body as {
+    const { event, ticketQuantity, user_id } = request.body as {
         event: {
             event_id: number,
             title: string,
             price: number,
         },
-        ticketQuantity: number
+        ticketQuantity: number,
+        user_id: number
     }
 
     const { event_id, title, price } = event;
@@ -37,7 +38,8 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
         ],
         metadata: {
             eventDetails: JSON.stringify({ event_id, title, price }),
-            ticketQuantity
+            ticketQuantity,
+            user_id
         },
         mode: "payment",
         success_url: "http://localhost:5173/success",
