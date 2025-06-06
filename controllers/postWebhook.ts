@@ -8,7 +8,6 @@ require("dotenv").config({
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-
 const postWebhook = async (request: Request, response: Response, next: NextFunction) => {
     const sig = request.headers['stripe-signature'] as string;
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
