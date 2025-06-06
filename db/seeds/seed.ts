@@ -53,11 +53,10 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         )`)
 
         const usersTablePromise = db.query(`CREATE TABLE users (
-            user_id SERIAL PRIMARY KEY,
+            user_id uuid PRIMARY KEY,
             name VARCHAR NOT NULL,
             username VARCHAR NOT NULL,
             email VARCHAR NOT NULL,
-            password_hash VARCHAR NOT NULL,
             bio TEXT,
             avatar_url VARCHAR,
             role VARCHAR NOT NULL,
@@ -79,7 +78,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
             timezone VARCHAR,
             venue_id INT references venues(venue_id) NOT NULL,
             is_online BOOLEAN NOT NULL,
-            host_id INT REFERENCES users(user_id) NOT NULL,
+            host_id uuid REFERENCES users(user_id) NOT NULL,
             event_type VARCHAR NOT NULL,
             capacity INT NOT NULL,
             attendees_count INT DEFAULT 0 NOT NULL,
@@ -93,7 +92,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
     })
     .then(() => {
         const userEventsTablePromise = db.query(`CREATE TABLE user_events (
-            user_id INT NOT NULL,
+            user_id uuid NOT NULL,
             event_id INT NOT NULL,
             PRIMARY KEY (user_id, event_id),
             FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
@@ -122,7 +121,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         const venuesPromise = db.query(insertVenuesQueryString);
 
         const insertUsersQueryString = format(
-            `INSERT INTO users (name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url }) => [name, username, email, password_hash, role, user_created_at, user_last_updated_at, bio, avatar_url])
+            `INSERT INTO users (user_id, name, username, email, role, user_created_at, user_last_updated_at, bio, avatar_url) VALUES %L`, userData.map(({ user_id, name, username, email, role, user_created_at, user_last_updated_at, bio, avatar_url }) => [user_id, name, username, email, role, user_created_at, user_last_updated_at, bio, avatar_url])
         )
         const usersPromise = db.query(insertUsersQueryString);
 
