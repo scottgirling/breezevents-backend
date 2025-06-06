@@ -8,7 +8,7 @@ export interface SingleEvent {
   timezone: string;
   venue_id: number;
   is_online: boolean;
-  host_id: number;
+  host_id: string;
   event_type: string;
   capacity: number;
   attendees_count: number;
@@ -31,7 +31,7 @@ export const events: SingleEvent[] = [
     "timezone": "Europe/London",
     "venue_id": 1,
     "is_online": false,
-    "host_id": 2,
+    "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
     "event_type": "expo",
     "capacity": 800,
     "attendees_count": 545,
@@ -52,7 +52,7 @@ export const events: SingleEvent[] = [
     "timezone": "Europe/London",
     "venue_id": 2,
     "is_online": false,
-    "host_id": 2,
+    "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
     "event_type": "conference",
     "capacity": 500,
     "attendees_count": 460,
@@ -73,7 +73,7 @@ export const events: SingleEvent[] = [
     "timezone": "Europe/London",
     "venue_id": 3,
     "is_online": true,
-    "host_id": 4,
+    "host_id": "d3b07384-d9d8-40a2-b8e4-c4b0a5f3b8b6",
     "event_type": "summit",
     "capacity": 1000,
     "attendees_count": 775,
@@ -94,7 +94,7 @@ export const events: SingleEvent[] = [
     "timezone": "Europe/London",
     "venue_id": 1,
     "is_online": false,
-    "host_id": 4,
+    "host_id": "d3b07384-d9d8-40a2-b8e4-c4b0a5f3b8b6",
     "event_type": "conference",
     "capacity": 600,
     "attendees_count": 520,
@@ -115,7 +115,7 @@ export const events: SingleEvent[] = [
     "timezone": "Europe/London",
     "venue_id": 2,
     "is_online": true,
-    "host_id": 4,
+    "host_id": "d3b07384-d9d8-40a2-b8e4-c4b0a5f3b8b6",
     "event_type": "forum",
     "capacity": 400,
     "attendees_count": 370,
