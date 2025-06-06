@@ -1,7 +1,7 @@
 const db = require("../db/connection");
 const checkUserExists = require("./utils/checkUserExists");
 
-const updateUserById = (user_id: number, name: string, username: string, email: string, password_hash: string, bio: string, avatar_url: string) => {
+const updateUserById = (user_id: number, name: string, username: string, email: string, bio: string, avatar_url: string) => {
     return checkUserExists(user_id)
     .then(() => {
         let queryValues = [];
@@ -21,11 +21,6 @@ const updateUserById = (user_id: number, name: string, username: string, email: 
         if (email) {
             queryValues.push(email);
             sqlQuery += `, email = $${queryValues.length}`;
-        }
-    
-        if (password_hash) {
-            queryValues.push(password_hash);
-            sqlQuery += `, password_hash = $${queryValues.length}`;
         }
     
         if (bio) {
