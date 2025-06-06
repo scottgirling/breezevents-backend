@@ -45,7 +45,7 @@ describe("GET /api/events", () => {
                 expect(event).toHaveProperty("timezone", expect.any(String));
                 expect(event).toHaveProperty("venue_id", expect.any(Number));
                 expect(event).toHaveProperty("is_online", expect.any(Boolean));
-                expect(event).toHaveProperty("host_id", expect.any(Number));
+                expect(event).toHaveProperty("host_id", expect.any(String));
                 expect(event).toHaveProperty("event_type", expect.any(String));
                 expect(event).toHaveProperty("capacity", expect.any(Number));
                 expect(event).toHaveProperty("attendees_count", expect.any(Number));
@@ -300,7 +300,7 @@ describe("GET /api/events/:event_id", () => {
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
-                "host_id": 2,
+                "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
                 "event_type": "expo",
                 "capacity": 800,
                 "attendees_count": 545,
@@ -354,7 +354,7 @@ describe("GET /api/events/:event_id", () => {
 describe("GET /api/events/host/:user_id", () => {
     test("200: responds with an array of event objects according to the event host, as well as an appropriate status code", () => {
         return request(app)
-        .get("/api/events/host/2")
+        .get("/api/events/host/9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             const output: Array<any> = events;
@@ -366,7 +366,7 @@ describe("GET /api/events/host/:user_id", () => {
     });
     test("400: responds with an appropriate status code and error message when passed an invalid 'user_id'", () => {
         return request(app)
-        .get("/api/events/host/forty-five")
+        .get("/api/events/host/45")
         .expect(400)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Invalid data type.");
@@ -374,7 +374,7 @@ describe("GET /api/events/host/:user_id", () => {
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
         return request(app)
-        .get("/api/events/host/45")
+        .get("/api/events/host/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");
@@ -482,15 +482,14 @@ describe("GET /api/venues/:venue_id", () => {
 describe("GET /api/users/:user_id", () => {
     test("200: responds with an individual user object, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/users/1")
+        .get("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .expect(200)
         .then(({ body: { user } } : { body: CustomResponse }) => {
             expect(user).toMatchObject({
-                "user_id": 1,
+                "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Alice Thompson",
                 "username": "alice_thompson123",
                 "email": "alice.thompson@example.com",
-                "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
                 "role": "attendee",
                 "user_created_at": "2025-05-01T09:00:00.000Z",
                 "user_last_updated_at": "2025-05-10T10:00:00.000Z",
@@ -509,7 +508,7 @@ describe("GET /api/users/:user_id", () => {
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
         return request(app)
-        .get("/api/users/65")
+        .get("/api/users/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("User does not exist.");
@@ -520,7 +519,7 @@ describe("GET /api/users/:user_id", () => {
 describe("GET /api/users/:user_id/events", () => {
     test("200: responds with an array of user-event objects, with the appropriate properties and status code", () => {
         return request(app)
-        .get("/api/users/1/events")
+        .get("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(Array.isArray(events)).toBe(true);
@@ -536,7 +535,7 @@ describe("GET /api/users/:user_id/events", () => {
                 expect(event).toHaveProperty("timezone", expect.any(String));
                 expect(event).toHaveProperty("venue_id", expect.any(Number));
                 expect(event).toHaveProperty("is_online", expect.any(Boolean));
-                expect(event).toHaveProperty("host_id", expect.any(Number));
+                expect(event).toHaveProperty("host_id", expect.any(String));
                 expect(event).toHaveProperty("event_type", expect.any(String));
                 expect(event).toHaveProperty("capacity", expect.any(Number));
                 expect(event).toHaveProperty("attendees_count", expect.any(Number));
@@ -552,7 +551,7 @@ describe("GET /api/users/:user_id/events", () => {
     });
     test("200: responds with an empty array and an appropriate status code when passed an existing username but the user has not signed up to any events yet", () => {
         return request(app)
-        .get("/api/users/5/events")
+        .get("/api/users/8e8f0b79-f8c9-4ca1-8e1a-15c3a8c5d57a/events")
         .expect(200)
         .then(({ body: { events } } : { body: CustomResponse }) => {
             expect(events.length).toBe(0);
@@ -568,7 +567,7 @@ describe("GET /api/users/:user_id/events", () => {
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent username", () => {
         return request(app)
-        .get("/api/users/654/events")
+        .get("/api/users/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d/events")
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("Profile not found.");
@@ -594,7 +593,7 @@ describe("PATCH /api/events/:event_id", () => {
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
-                "host_id": 2,
+                "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
                 "event_type": "expo",
                 "capacity": 800,
                 "attendees_count": 546,
@@ -626,7 +625,7 @@ describe("PATCH /api/events/:event_id", () => {
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
-                "host_id": 2,
+                "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
                 "event_type": "expo",
                 "capacity": 800,
                 "attendees_count": 544,
@@ -697,7 +696,7 @@ describe("PATCH /api/events/update/:event_id", () => {
                 "timezone": "Europe/London",
                 "venue_id": 2,
                 "is_online": false,
-                "host_id": 2,
+                "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
                 "event_type": "expo",
                 "capacity": 800,
                 "attendees_count": 545,
@@ -733,7 +732,7 @@ describe("PATCH /api/events/update/:event_id", () => {
                 "timezone": "Europe/London",
                 "venue_id": 2,
                 "is_online": false,
-                "host_id": 2,
+                "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
                 "event_type": "expo",
                 "capacity": 800,
                 "attendees_count": 545,
@@ -779,7 +778,7 @@ describe("PATCH /api/events/update/:event_id", () => {
                 "timezone": "Europe/Paris",
                 "venue_id": 2,
                 "is_online": false,
-                "host_id": 4,
+                "host_id": "d3b07384-d9d8-40a2-b8e4-c4b0a5f3b8b6",
                 "event_type": "forum",
                 "capacity": 1200,
                 "attendees_count": 775,
@@ -836,18 +835,17 @@ describe("PATCH /api/events/update/:event_id", () => {
 describe("PATCH /api/users/:user_id", () => {
     test("200: responds with an updated user object when a single user column is amended, as well as an appropriate status code", () => {
         return request(app)
-        .patch("/api/users/1")
+        .patch("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .send({
             "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
         })
         .expect(200)
         .then(({ body: { user } } : { body: CustomResponse }) => {
             const expectedOutput = {
-                "user_id": 1,
+                "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Alice Thompson",
                 "username": "alice_thompson123",
                 "email": "alice.thompson@example.com",
-                "password_hash": "$2b$10$J4lkqkGcN9MbH1E4ytQsE.8QZB/UO1w8hPbmC34RhOeSkqJK9sFhi",
                 "role": "attendee",
                 "user_created_at": "2025-05-01T09:00:00.000Z",
                 "bio": "I LOVE TECH! Always looking to meet cool tech peeps!",
@@ -859,23 +857,21 @@ describe("PATCH /api/users/:user_id", () => {
     });
     test("200: responds with an updated user object when multiple user columns are amended, as well as an appropriate status code", () => {
         return request(app)
-        .patch("/api/users/1")
+        .patch("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .send({
             "name": "Scott Girling",
             "username": "scottgirling123",
             "email": "scott@yahoo.com",
-            "password_hash": "password_hash",
             "bio": "A software developer looking to find cool tech events near me!",
             "avatar_url": "https://example.com/avatars/scott.jpg"
         })
         .expect(200)
         .then(({ body: { user } } : { body: CustomResponse }) => {
             const expectedOutput = {
-                "user_id": 1,
+                "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Scott Girling",
                 "username": "scottgirling123",
                 "email": "scott@yahoo.com",
-                "password_hash": "password_hash",
                 "role": "attendee",
                 "user_created_at": "2025-05-01T09:00:00.000Z",
                 "bio": "A software developer looking to find cool tech events near me!",
@@ -887,7 +883,7 @@ describe("PATCH /api/users/:user_id", () => {
     });
     test("400: responds with an appropriate status code and error message when the request body does not contain any fields", () => {
         return request(app)
-        .patch("/api/users/1")
+        .patch("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .send({})
         .expect(400)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
@@ -907,7 +903,7 @@ describe("PATCH /api/users/:user_id", () => {
     });
     test("404: responds with an appropriate status code and error message when passed a valid but non-existent 'user_id'", () => {
         return request(app)
-        .patch("/api/users/37")
+        .patch("/api/users/e9f1b982-f3d6-4df7-9f75-b6a7e9d4263f")
         .send({
             "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
         })
@@ -946,10 +942,10 @@ describe("POST /api/user_events", () => {
     test("201: responds with the newly created user-event entry, as well as an appropriate status code", () => {
         return request(app)
         .post("/api/user_events")
-        .send({ user_id: 1, event_id: 4 })
+        .send({ user_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", event_id: 4 })
         .expect(201)
         .then(({ body: { userEvent } } : { body: CustomResponse }) => {
-            expect(userEvent).toHaveProperty("user_id", 1)
+            expect(userEvent).toHaveProperty("user_id", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
             expect(userEvent).toHaveProperty("event_id", 4);
         });
     });
@@ -965,7 +961,7 @@ describe("POST /api/user_events", () => {
     test("404: responds with an appropriate status code and error message when the request body contains a valid but non-existent user or event id", () => {
         return request(app)
         .post("/api/user_events")
-        .send({ user_id: 1, event_id: 44 })
+        .send({ user_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", event_id: 44 })
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
             expect(msg).toBe("User or event not found.");
@@ -987,7 +983,7 @@ describe("POST /api/events", () => {
             "timezone": "Europe/London",
             "venue_id": 3,
             "is_online": false,
-            "host_id": 2,
+            "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
             "event_type": "forum",
             "capacity": 600,
             "is_free": false,
@@ -1006,7 +1002,7 @@ describe("POST /api/events", () => {
             expect(event).toHaveProperty("timezone", "Europe/London");
             expect(event).toHaveProperty("venue_id", 3);
             expect(event).toHaveProperty("is_online", false);
-            expect(event).toHaveProperty("host_id", 2);
+            expect(event).toHaveProperty("host_id", "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d");
             expect(event).toHaveProperty("event_type", "forum");
             expect(event).toHaveProperty("capacity", 600);
             expect(event).toHaveProperty("attendees_count", 0);
@@ -1025,7 +1021,7 @@ describe("POST /api/events", () => {
         .send({
             "venue_id": 3,
             "is_online": false,
-            "host_id": 2,
+            "host_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d",
             "event_type": "forum",
             "capacity": 600,
             "is_free": false,
@@ -1071,26 +1067,25 @@ describe("POST /api/users", () => {
         return request(app)
         .post("/api/users")
         .send({
+            "user_id": "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c49",
             "name": "Scott Girling",
             "username": "scottgirling123",
             "email": "scott@yahoo.com",
-            "password_hash": "password_hash",
             "bio": "A software developer looking to find cool tech events near me!",
             "role": "attendee"
         })
         .expect(201)
         .then(({ body: { user } } : { body: CustomResponse }) => {
-            expect(user).toHaveProperty("user_id", 6);
+            expect(user).toHaveProperty("user_id", "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c49");
             expect(user).toHaveProperty("name", "Scott Girling");
             expect(user).toHaveProperty("username", "scottgirling123");
             expect(user).toHaveProperty("email", "scott@yahoo.com");
-            expect(user).toHaveProperty("password_hash", "password_hash");
             expect(user).toHaveProperty("bio", "A software developer looking to find cool tech events near me!");
             expect(user).toHaveProperty("avatar_url", null);
             expect(user).toHaveProperty("role", "attendee");
             expect(user).toHaveProperty("user_created_at", expect.any(String));
             expect(user).toHaveProperty("user_last_updated_at", expect.any(String));
-            expect(Object.entries(user).length).toBe(10);
+            expect(Object.entries(user).length).toBe(9);
         });
     });
     test("400: responds with an appropriate status code and error messafe when the request body does not contain the correct fields", () => {
