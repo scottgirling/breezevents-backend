@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 export interface CustomResponse extends Response {
     status: any;
     send: any;
@@ -23,4 +25,9 @@ export interface CustomError extends Error {
     status: number;
     code: string;
     msg: string;
+}
+
+export interface SupasbaseContext {
+    request: Request,
+    response: Response
 }
