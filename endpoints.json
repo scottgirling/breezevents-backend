@@ -600,13 +600,23 @@
         "exampleResponse": "none - only a 204 status code"
     },
     "POST /api/user_events": {
-        "description": "serves an individual user-event object that the user has just signed up to attend",
+        "description": "serves an individual user-event object that the user has signed up to attend",
         "queries": [],
         "exampleRequestBody": { "user_id": 1, "event_id": 4 },
         "examplePath": "/api/user_events",
         "exampleResponse": {
             "user_id": 1,
             "event_id": 4
+        }
+    },
+    "POST /api/event_tags": {
+        "description": "serves an individual event-tag object, illustrating the 'tag' an event host has selected",
+        "queries": [],
+        "exampleRequestBody": { "event_id": 1, "tag_id": 5 },
+        "examplePath": "/api/event_tags",
+        "exampleResponse": {
+            "event_id": 1,
+            "tag_id": 5
         }
     },
     "POST /api/events": {
