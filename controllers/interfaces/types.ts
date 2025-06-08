@@ -13,6 +13,7 @@ export interface CustomResponse extends Response {
     userEvent: object;
     venues: Array<object>;
     venue: object;
+    eventTag: object;
 }
 
 export interface CustomRequest extends Request {
