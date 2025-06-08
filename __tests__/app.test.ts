@@ -964,7 +964,38 @@ describe("POST /api/user_events", () => {
         .send({ user_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", event_id: 44 })
         .expect(404)
         .then(({ body: { msg } } : { body: CustomResponse }) => {
-            expect(msg).toBe("User or event not found.");
+            expect(msg).toBe("Invalid request - one or more ID not found.");
+        });
+    });
+});
+
+describe("POST /api/event_tags", () => {
+    test("201: responds with the newly created event-tag entry when a single tag is added to an event, as well as an appropriate status code", () => {
+        return request(app)
+        .post("/api/event_tags")
+        .send({ event_id: 1, tag_id: 3 })
+        .expect(201)
+        .then(({ body: { eventTag } } : { body: CustomResponse }) => {
+            expect(eventTag).toHaveProperty("event_id", 1);
+            expect(eventTag).toHaveProperty("tag_id", 3);
+        });
+    });
+    test("400: responds with an appropriate status code and error message when the request body does not contain the correct fields", () => {
+        return request(app)
+        .post("/api/event_tags")
+        .send({})
+        .expect(400)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - missing field(s).");
+        });
+    });
+    test("404: responds with an appropriate status code and error message when the request body contains a valid but non-existent event or tag id", () => {
+        return request(app)
+        .post("/api/event_tags")
+        .send({ event_id: 1, tag_id: 15 })
+        .expect(404)
+        .then(({ body: { msg } } : { body: CustomResponse }) => {
+            expect(msg).toBe("Invalid request - one or more ID not found.");
         });
     });
 });
