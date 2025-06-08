@@ -39,7 +39,7 @@ app.use((error: CustomError, request: CustomRequest, response: CustomResponse, n
 
 app.use((error: CustomError, request: CustomRequest, response:CustomResponse, next: NextFunction) => {
     if (error.code === "23503") {
-        response.status(404).send({ msg: "User or event not found." });
+        response.status(404).send({ msg: "Invalid request - one or more ID not found." });
     }
     next(error);
 });
