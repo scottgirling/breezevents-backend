@@ -46,8 +46,8 @@ const postCheckoutSession = (request: CustomRequest, response: Response, next: N
             user_id
         },
         mode: "payment",
-        success_url: "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: "http://localhost:5173/events"
+        success_url: "http://breezevents.netlify.app/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: "http://breezevents.netlify.app/events"
     })
     .then((session: any) => {
         response.json({ url: session.url });
