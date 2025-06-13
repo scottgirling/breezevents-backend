@@ -11,7 +11,7 @@ const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag
         return Promise.reject({ status: 400, msg: "Invalid 'Sort By' or 'Order' query." });
     }
 
-    let sqlQuery = `SELECT DISTINCT events.* FROM events JOIN event_tags ON events.event_id = event_tags.event_id JOIN tags ON event_tags.tag_id = tags.tag_id WHERE events.is_published = 'true'`;
+    let sqlQuery = `SELECT DISTINCT events.* FROM events JOIN event_tags ON events.event_id = event_tags.event_id JOIN tags ON event_tags.tag_id = tags.tag_id WHERE events.end_time::timestamp > CURRENT_TIMESTAMP AND events.is_published = 'true'`;
 
     if (tag) {
         filterQueries.push(tag);
