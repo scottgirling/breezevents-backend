@@ -1,5 +1,4 @@
 const db = require("../db/connection");
-const checkTagExists = require("./utils/checkTagExists");
 
 const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag: string, is_online: string, is_free: string, limit: number = 12, p: number = 1) => {
     const offset = (p - 1) * limit;
