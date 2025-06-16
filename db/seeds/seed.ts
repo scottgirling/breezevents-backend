@@ -76,7 +76,7 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
             start_time VARCHAR NOT NULL,
             end_time VARCHAR NOT NULL,
             timezone VARCHAR,
-            venue_id INT references venues(venue_id) NOT NULL,
+            venue_id INT references venues(venue_id),
             is_online BOOLEAN NOT NULL,
             host_id uuid REFERENCES users(user_id) NOT NULL,
             event_type VARCHAR NOT NULL,
