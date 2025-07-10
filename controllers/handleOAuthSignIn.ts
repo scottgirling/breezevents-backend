@@ -6,12 +6,12 @@ const handleOAuthSignIn = async (request: Request, response: Response) => {
 
     if (code) {
         const supabase = createClient({ request, response });
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-        console.log(data, "<--- data")
-        console.log(error, "<--- error")
+        await supabase.auth.exchangeCodeForSession(code);
     }
 
-    response.redirect("http://localhost:5173/account");
+    response.redirect("https://breezevents.netlify.app/account");
 }
+
+// above code never reached - using implicit flow currently
 
 module.exports = handleOAuthSignIn;
