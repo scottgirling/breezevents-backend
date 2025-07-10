@@ -5,7 +5,7 @@ require("dotenv").config({
 	path: `${__dirname}/../../.env.SUPABASE_AUTH`
 });
 
-const createClient = (context: SupasbaseContext) => {
+export const createClient = (context: SupasbaseContext) => {
   return createServerClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
     cookies: {
       getAll() {

@@ -1,6 +1,7 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse, CustomError } from "../controllers/interfaces/types";
 const getAuthConfirmation = require("../controllers/getAuthConfirmation");
+const handleOAuthSignIn = require("../controllers/handleOAuthSignIn");
 
 const express = require("express");
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use("/api", express.json(), apiRouter);
 app.get("/auth/confirm", getAuthConfirmation);
+app.get("/auth/callback", handleOAuthSignIn);
 app.use("/webhook", webhookRouter);
 
 app.use((error: CustomError, request: CustomRequest, response: CustomResponse, next: NextFunction) => {
