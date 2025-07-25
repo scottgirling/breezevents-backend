@@ -1,9 +1,7 @@
-const postUserEvent = require("../../controllers/postUserEvent");
+import { postUserEvent } from "../../controllers/postUserEvent";
 
-const userEventsRouter = require("express").Router();
+export const userEventsRouter = require("express").Router();
 
 userEventsRouter
     .route("/")
     .post(postUserEvent);
-
-module.exports = userEventsRouter;

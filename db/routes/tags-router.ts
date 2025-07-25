@@ -1,9 +1,7 @@
-const getTags = require("../../controllers/getTags");
+import { getTags } from "../../controllers/getTags";
 
-const tagsRouter = require("express").Router();
+export const tagsRouter = require("express").Router();
 
 tagsRouter
     .route("/")
     .get(getTags);
-
-module.exports = tagsRouter;

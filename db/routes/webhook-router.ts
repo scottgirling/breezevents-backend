@@ -1,11 +1,9 @@
 const bodyParser = require("body-parser");
 
-const postWebhook = require("../../controllers/postWebhook");
+import { postWebhook } from "../../controllers/postWebhook";
 
-const webhookRouter = require("express").Router();
+export const webhookRouter = require("express").Router();
 
 webhookRouter
     .route("/")
     .post(bodyParser.raw({ type: "application/json" }), postWebhook);
-
-module.exports = webhookRouter;

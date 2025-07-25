@@ -1,15 +1,15 @@
-const getEndpoints = require("../../controllers/getEndpoints");
+import { getEndpoints } from "../../controllers/getEndpoints";
 
-const apiRouter = require("express").Router();
-const eventsRouter = require("./events-router");
-const eventTagsRouter = require("./event_tags-router");
-const tagsRouter = require("./tags-router");
-const userEventsRouter = require("./user_events-router");
-const usersRouter = require("./users-router");
-const venuesRouter = require("./venues-router");
-const stripeRouter = require("./stripe-router");
-const sessionRouter = require("./session-router");
-const authRouter = require("./auth-router");
+export const apiRouter = require("express").Router();
+import { eventsRouter } from "./events-router";
+import { eventTagsRouter } from "./event_tags-router";
+import { tagsRouter } from "./tags-router";
+import { userEventsRouter } from "./user_events-router";
+import { usersRouter } from "./users-router";
+import { venuesRouter } from "./venues-router";
+import { stripeRouter } from "./stripe-router";
+import { sessionRouter } from "./session-router";
+import { authRouter } from "./auth-router";
 
 apiRouter.use("/events", eventsRouter);
 apiRouter.use("/event_tags", eventTagsRouter);
@@ -22,5 +22,3 @@ apiRouter.use("/retrieve-session", sessionRouter);
 apiRouter.use("/signup", authRouter);
 
 apiRouter.get("/", getEndpoints);
-
-module.exports = apiRouter;
