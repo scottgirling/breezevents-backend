@@ -1,9 +1,9 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const checkTagExists = require("../models/utils/checkTagExists");
-const selectEvents = require("../models/selectEvents");
+import { checkTagExists } from "../models/utils/checkTagExists";
+import { selectEvents } from "../models/selectEvents";
 
-const getEvents = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const getEvents = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { sort_by, order, tag, is_online, is_free, limit, p } = request.query;
 
     if (tag) {
@@ -20,5 +20,3 @@ const getEvents = (request: CustomRequest, response: CustomResponse, next: NextF
         next(error);
     });
 }
-
-module.exports = getEvents;

@@ -1,7 +1,7 @@
-const db = require("../db/connection");
-const checkUserExists = require("./utils/checkUserExists");
+import db from "../db/connection";
+import { checkUserExists } from "./utils/checkUserExists";
 
-const updateUserById = (user_id: number, name: string, username: string, email: string, bio: string, avatar_url: string) => {
+export const updateUserById = (user_id: string, name: string, username: string, email: string, bio: string, avatar_url: string) => {
     return checkUserExists(user_id)
     .then(() => {
         let queryValues = [];
@@ -46,5 +46,3 @@ const updateUserById = (user_id: number, name: string, username: string, email: 
         return rows[0];
     });
 }
-
-module.exports = updateUserById;

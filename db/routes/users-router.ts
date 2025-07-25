@@ -1,9 +1,9 @@
-const getUserById = require("../../controllers/getUserById");
-const getEventsByUserId = require("../../controllers/getEventsByUserId");
-const patchUserById = require("../../controllers/patchUserById");
-const postUser = require("../../controllers/postUser");
+import { getUserById } from "../../controllers/getUserById";
+import { getEventsByUserId } from "../../controllers/getEventsByUserId";
+import { patchUserById } from "../../controllers/patchUserById";
+import { postUser } from "../../controllers/postUser";
 
-const usersRouter = require("express").Router();
+export const usersRouter = require("express").Router();
 
 usersRouter
     .route("/")
@@ -17,5 +17,3 @@ usersRouter
 usersRouter
     .route("/:user_id/events")
     .get(getEventsByUserId);
-
-module.exports = usersRouter;

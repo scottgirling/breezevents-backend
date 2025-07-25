@@ -1,5 +1,5 @@
-const db = require("../connection");
-const format = require("pg-format");
+import db from "../connection";
+import format from "pg-format";
 import { EventTag } from "../data/test-data/event_tags";
 import { SingleEvent } from "../data/test-data/events";
 import { Tag } from "../data/test-data/tags";
@@ -7,7 +7,7 @@ import { UserEvent } from "../data/test-data/user_events";
 import { User } from "../data/test-data/users";
 import { Venue } from "../data/test-data/venues";
 
-const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venueData } : { eventTagData: EventTag[], eventData: SingleEvent[], tagData: Tag[], userEventData: UserEvent[], userData: User[], venueData: Venue[] }) => {
+export const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venueData } : { eventTagData: EventTag[], eventData: SingleEvent[], tagData: Tag[], userEventData: UserEvent[], userData: User[], venueData: Venue[] }) => {
     return db.query("DROP TABLE IF EXISTS event_tags")
     .then(() => {
         return db.query("DROP TABLE IF EXISTS user_events");
@@ -147,5 +147,3 @@ const seed = ({ eventTagData, eventData, tagData, userEventData, userData, venue
         return Promise.all([eventTagsPromise, userEventsPromise]);
     })
 }
-
-module.exports = seed;

@@ -1,6 +1,6 @@
-const db = require("../db/connection");
+import db from "../db/connection";
 
-const selectUserById = (user_id: string) => {
+export const selectUserById = (user_id: string) => {
     return db.query("SELECT * FROM users WHERE user_id = $1", [user_id])
     .then(({ rows } : { rows: Array<object> }) => {
         if (!rows.length) {
@@ -9,5 +9,3 @@ const selectUserById = (user_id: string) => {
         return rows[0];
     });
 }
-
-module.exports = selectUserById;

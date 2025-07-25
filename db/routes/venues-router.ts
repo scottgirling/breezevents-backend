@@ -1,7 +1,7 @@
-const getVenues = require("../../controllers/getVenues");
-const getVenueById = require("../../controllers/getVenueById");
+import { getVenues } from "../../controllers/getVenues";
+import { getVenueById } from "../../controllers/getVenueById";
 
-const venuesRouter = require("express").Router();
+export const venuesRouter = require("express").Router();
 
 venuesRouter
     .route("/")
@@ -10,5 +10,3 @@ venuesRouter
 venuesRouter
     .route("/:venue_id")
     .get(getVenueById);
-
-module.exports = venuesRouter;

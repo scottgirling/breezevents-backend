@@ -1,6 +1,6 @@
-const db = require("../db/connection");
+import db from "../db/connection";
 
-const selectVenueById = (venue_id: string) => {
+export const selectVenueById = (venue_id: string) => {
     return db.query("SELECT * FROM venues WHERE venue_id = $1", [venue_id])
     .then(({ rows } : { rows: Array<object> }) => {
         if(!rows.length) {
@@ -9,5 +9,3 @@ const selectVenueById = (venue_id: string) => {
         return rows[0];
     });
 }
-
-module.exports = selectVenueById;

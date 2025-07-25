@@ -28,5 +28,3 @@ export const createClient = (context: SupasbaseContext) => {
     },
   });
 };
-
-module.exports = createClient;

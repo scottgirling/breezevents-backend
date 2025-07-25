@@ -1,10 +1,8 @@
-const db = require("../db/connection");
+import db from "../db/connection";
 
-const selectVenues = () => {
+export const selectVenues = () => {
     return db.query("SELECT * FROM venues")
     .then(({ rows } : { rows: Array<object> }) => {
         return rows;
     });
 }
-
-module.exports = selectVenues;

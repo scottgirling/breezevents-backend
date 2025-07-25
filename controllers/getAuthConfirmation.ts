@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-const createClient = require("../lib/supabaseClient");
+import { createClient } from "../lib/supabaseClient";
 
-const getAuthConfirmation = async (request: Request, response: Response) => {
+export const getAuthConfirmation = async (request: Request, response: Response) => {
 	const token_hash = request.query.token_hash;
 	const type = request.query.type;
 	const next = typeof request.query.next === "string" ? request.query.next : "/";
@@ -20,5 +20,3 @@ const getAuthConfirmation = async (request: Request, response: Response) => {
 
 	return response.redirect(303, "/auth/auth-code-error");
 };
-
-module.exports = getAuthConfirmation;

@@ -1,8 +1,8 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const removeEventById = require("../models/removeEventById");
+import { removeEventById } from "../models/removeEventById";
 
-const deleteEventById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const deleteEventById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { event_id } = request.params;
     removeEventById(event_id)
     .then(() => {
@@ -12,5 +12,3 @@ const deleteEventById = (request: CustomRequest, response: CustomResponse, next:
         next(error);
     });
 }
-
-module.exports = deleteEventById;

@@ -1,6 +1,6 @@
-const db = require("../db/connection");
+import db from "../db/connection";
 
-const updateEventById = (attendeeCountChange: number, event_id: number) => {
+export const updateEventById = (attendeeCountChange: number, event_id: number) => {
     return db.query("UPDATE events SET attendees_count = attendees_count + $1 WHERE event_id = $2 RETURNING *", [attendeeCountChange, event_id])
     .then(({ rows } : { rows: Array<object> }) => {
         if (!rows.length) {
@@ -9,5 +9,3 @@ const updateEventById = (attendeeCountChange: number, event_id: number) => {
         return rows[0];
     });
 }
-
-module.exports = updateEventById;

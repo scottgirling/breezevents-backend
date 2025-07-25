@@ -1,6 +1,6 @@
-const db = require("../db/connection");
+import db from "../db/connection";
 
-const updateEventDetailsById = (event_id: string, title: any, event_overview: string, description: string, start_time: string, end_time: string, timezone: string, venue_id: number, is_online: boolean, event_type: string, capacity: number, is_free: boolean, price: number, event_image_url: string, is_published: boolean) => {
+export const updateEventDetailsById = (event_id: string, title: any, event_overview: string, description: string, start_time: string, end_time: string, timezone: string, venue_id: number, is_online: boolean, event_type: string, capacity: number, is_free: boolean, price: number, event_image_url: string, is_published: boolean) => {
     
     let queryValues = [];
 
@@ -94,5 +94,3 @@ const updateEventDetailsById = (event_id: string, title: any, event_overview: st
         return rows[0];
     });
 }
-
-module.exports = updateEventDetailsById;

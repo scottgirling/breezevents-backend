@@ -1,9 +1,7 @@
-const postEventTag = require("../../controllers/postEventTag");
+import { postEventTag } from "../../controllers/postEventTag";
 
-const eventTagsRouter = require("express").Router();
+export const eventTagsRouter = require("express").Router();
 
 eventTagsRouter
     .route("/")
     .post(postEventTag);
-
-module.exports = eventTagsRouter;

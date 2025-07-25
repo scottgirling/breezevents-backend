@@ -1,8 +1,8 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const selectEventByEventId = require("../models/selectEventByEventId");
+import { selectEventByEventId } from "../models/selectEventByEventId";
 
-const getEventByEventId = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const getEventByEventId = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { event_id } = request.params;
     selectEventByEventId(event_id)
     .then((event: object) => {
@@ -12,5 +12,3 @@ const getEventByEventId = (request: CustomRequest, response: CustomResponse, nex
         next(error);
     })
 }
-
-module.exports = getEventByEventId;

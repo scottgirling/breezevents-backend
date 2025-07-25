@@ -1,12 +1,12 @@
-const getEvents = require("../../controllers/getEvents");
-const getEventByEventId = require("../../controllers/getEventByEventId");
-const getEventsByHostId = require("../../controllers/getEventsByHostId");
-const patchEventById = require("../../controllers/patchEventById");
-const patchEventDetailsById = require("../../controllers/patchEventDetailsById");
-const postEvent = require("../../controllers/postEvent");
-const deleteEventById = require("../../controllers/deleteEventById");
+import { getEvents } from "../../controllers/getEvents";
+import { getEventByEventId } from "../../controllers/getEventByEventId";
+import { getEventsByHostId } from "../../controllers/getEventsByHostId";
+import { patchEventById } from "../../controllers/patchEventById";
+import { patchEventDetailsById } from "../../controllers/patchEventDetailsById";
+import { postEvent } from "../../controllers/postEvent";
+import { deleteEventById } from "../../controllers/deleteEventById";
 
-const eventsRouter = require("express").Router();
+export const eventsRouter = require("express").Router();
 
 eventsRouter
     .route("/")
@@ -26,5 +26,3 @@ eventsRouter
 eventsRouter
     .route("/host/:user_id")
     .get(getEventsByHostId);
-
-module.exports = eventsRouter;

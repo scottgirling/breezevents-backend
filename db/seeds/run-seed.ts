@@ -1,6 +1,6 @@
 import * as devData from '../data/development-data/index';
-const seed = require("./seed");
-const db = require("../connection");
+import { seed } from "./seed";
+import db from "../connection";
 
 const runSeed = () => {
     return seed(devData).then(() => db.end());

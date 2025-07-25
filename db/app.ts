@@ -1,14 +1,14 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse, CustomError } from "../controllers/interfaces/types";
-const getAuthConfirmation = require("../controllers/getAuthConfirmation");
-const handleOAuthSignIn = require("../controllers/handleOAuthSignIn");
+import { getAuthConfirmation } from "../controllers/getAuthConfirmation";
+import { handleOAuthSignIn } from "../controllers/handleOAuthSignIn";
 
 const express = require("express");
-const app = express();
+export const app = express();
 
-const cors = require("cors");
-const apiRouter = require("./routes/api-router");
-const webhookRouter = require("./routes/webhook-router");
+import cors from "cors";
+import { apiRouter } from "./routes/api-router";
+import { webhookRouter } from "./routes/webhook-router";
 
 app.use(express.static("public"));
 app.use(cors());
@@ -45,5 +45,3 @@ app.use((error: CustomError, request: CustomRequest, response:CustomResponse, ne
     }
     next(error);
 });
-
-module.exports = app;

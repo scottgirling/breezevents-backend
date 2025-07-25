@@ -1,11 +1,11 @@
 import { CustomResponse } from "../controllers/interfaces/types";
 
-const request = require("supertest");
-const app = require("../db/app");
-const connection = require("../db/connection");
-const seed = require("../db/seeds/seed");
+import request from "supertest";
+import { app } from "../db/app";
+import connection from "../db/connection";
+import { seed } from "../db/seeds/seed";
+import * as testData from "../db/data/test-data/index";
 const endpointsJSON = require(`${__dirname}/../../endpoints.json`);
-const testData = require("../db/data/test-data/index");
 
 beforeEach(() => {
     return seed(testData);
