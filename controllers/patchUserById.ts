@@ -1,8 +1,8 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const updateUserById = require("../models/updateUserById");
+import { updateUserById } from "../models/updateUserById";
 
-const patchUserById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const patchUserById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { user_id } = request.params;
     const { name, username, email, bio, avatar_url } = request.body;
     updateUserById(user_id, name, username, email, bio, avatar_url)
@@ -13,5 +13,3 @@ const patchUserById = (request: CustomRequest, response: CustomResponse, next: N
         next(error);
     });
 }
-
-module.exports = patchUserById;

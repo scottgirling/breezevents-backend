@@ -1,8 +1,8 @@
 import { NextFunction } from "express";
 import { CustomRequest, CustomResponse } from "./interfaces/types";
-const addEventTag = require("../models/addEventTag");
+import { addEventTag } from "../models/addEventTag";
 
-const postEventTag = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const postEventTag = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
     const { event_id, tag_id } = request.body;
     addEventTag(event_id, tag_id)
     .then((eventTag: object) => {
@@ -12,5 +12,3 @@ const postEventTag = (request: CustomRequest, response: CustomResponse, next: Ne
         next(error);
     });
 }
-
-module.exports = postEventTag;
