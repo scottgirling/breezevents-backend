@@ -7,14 +7,20 @@ export const getAuthConfirmation = async (request: Request, response: Response) 
 	const next = typeof request.query.next === "string" ? request.query.next : "/";
 
 	if (token_hash && type) {
-		const supabase = createClient({ request, response });
-		const { error } = await supabase.auth.verifyOtp({
-			type,
-			token_hash,
-		});
-
-		if (!error) {
-			return response.redirect(303, next);
+		try {
+			const supabase = createClient({ request, response });
+			const { error } = await supabase.auth.verifyOtp({
+				type,
+				token_hash,
+			});
+	
+			if (!error) {
+				return response.redirect(303, next);
+			} else {
+				console.error("Error verifying OTP: ", error);
+			}
+		} catch (err) {
+			console.error("Error in TOP verification process: ", err);
 		}
 	}
 
