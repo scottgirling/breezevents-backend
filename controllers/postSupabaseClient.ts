@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-const createClient = require("../lib/supabaseClient");
+import { createClient } from "../lib/supabaseClient";
 
-const postSupabaseClient = async (request: Request, response: Response) => {
+export const postSupabaseClient = async (request: Request, response: Response) => {
   try {
     const supabase = createClient({ request, response });
 
@@ -16,5 +16,3 @@ const postSupabaseClient = async (request: Request, response: Response) => {
         return response.status(500).json({ error: "Unexpected server error", details: err });
     }
 }
-
-module.exports = postSupabaseClient;

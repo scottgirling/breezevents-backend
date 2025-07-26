@@ -1,4 +1,4 @@
-const postSupabaseClient = require("../../controllers/postSupabaseClient");
+import { postSupabaseClient } from "../../controllers/postSupabaseClient";
 
 export const authRouter = require("express").Router();
 
