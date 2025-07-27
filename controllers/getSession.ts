@@ -15,7 +15,6 @@ const getSession = async (request: Request, response: Response) => {
         const session = await stripe.checkout.sessions.retrieve(session_id);
         response.json(session);
     } catch (error) {
-        console.error("Error retrieving session ID:", error);
         response.status(500).send("Failed to retrieve session data.");
     }
 }

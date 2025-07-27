@@ -13,13 +13,8 @@ export const getAuthConfirmation = async (request: Request, response: Response) 
 			token_hash,
 		});
 
-		console.log("verifyOtp data: ", data)
-		console.log("verifyOtp error: ", error)
-
 		if (!error && data?.user) {
 			return response.redirect(303, next);
-		} else {
-			console.error("Error verifying OTP: ", error);
 		}
 	}
 

@@ -19,7 +19,6 @@ export const postWebhook = async (request: Request, response: Response, next: Ne
     try {
         event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
     } catch (error) {
-        console.error("Webhook signature verification failed:", error);
         return response.status(400).send(`Webhook Error: ${(error as Error).message}`);
     }
 
@@ -32,7 +31,6 @@ export const postWebhook = async (request: Request, response: Response, next: Ne
         const userId = session.metadata?.user_id;
 
         if (!eventDetails || !ticketQuantity) {
-            console.error("Missing metadata on session.");
             return response.status(400).send("Missing required metadata.");
         }
 
@@ -40,11 +38,8 @@ export const postWebhook = async (request: Request, response: Response, next: Ne
             await axios.patch(`https://events-platform-be-1fmx.onrender.com/api/events/${eventDetails.event_id}`, {
                 attendeeCountChange: ticketQuantity
             });
-
-            console.log(`Attendee count updated for event ${eventDetails.event_id}, ${eventDetails.title}.`);
         } catch (error) {
-            console.error("Failed to update event:", error);
-            return response.status(500).send("Database update failed.");
+            return response.status(500).send("Database update failed (events).");
         }
 
         try {
@@ -52,11 +47,8 @@ export const postWebhook = async (request: Request, response: Response, next: Ne
                 user_id: userId,
                 event_id: eventDetails.event_id
             });
-
-            console.log(`New row added for user ${userId}: event ${eventDetails.event_id}.`);
         } catch (error) {
-            console.error("Failed to post new row:", error);
-            return response.status(500).send("Database update failed.");
+            return response.status(500).send("Database update failed (user_events).");
         }
     }
 
