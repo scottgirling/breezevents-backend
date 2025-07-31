@@ -78,9 +78,9 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
                     const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-07-18T09:00:00Z");
-                    expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[0].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[2].start_time).toBe("2025-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when sorted by an invalid, non-existent column", () => {
@@ -99,9 +99,9 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
                     const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[2].start_time).toBe("2025-07-18T09:00:00Z");
+                    expect(output[0].start_time).toBe("2025-10-18T09:00:00Z");
+                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[2].start_time).toBe("2025-08-20T10:00:00Z");
                 });
             });
             test("200: responds with an ordered array of event objects by a default value ('asc') when one is not specifically selected, as well as an appropriate status code", () => {
@@ -110,9 +110,9 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then(({ body: { events } } : { body: CustomResponse }) => {
                     const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-07-18T09:00:00Z");
-                    expect(output[1].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[2].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[0].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(output[2].start_time).toBe("2025-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when ordered by an invalid, non-existent value", () => {
