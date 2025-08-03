@@ -1,7 +1,7 @@
-import { CustomResponse } from './interfaces/types';
+import { Response } from "express";
 
 const endpoints = require(`${__dirname}/../../endpoints.json`);
     
-export const getEndpoints = (request: Request, response: CustomResponse) => {
+export const getEndpoints = (request: Request, response: Response) => {
     response.status(200).send({ endpoints });
 }

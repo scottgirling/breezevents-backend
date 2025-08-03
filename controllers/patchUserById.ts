@@ -1,8 +1,7 @@
-import { NextFunction } from "express";
-import { CustomRequest, CustomResponse } from "./interfaces/types";
+import { NextFunction, Request, Response } from "express";
 import { updateUserById } from "../models/updateUserById";
 
-export const patchUserById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const patchUserById = (request: Request, response: Response, next: NextFunction) => {
     const { user_id } = request.params;
     const { name, username, email, bio, avatar_url } = request.body;
     updateUserById(user_id, name, username, email, bio, avatar_url)
