@@ -1,8 +1,7 @@
-import { NextFunction } from "express";
-import { CustomRequest, CustomResponse } from "./interfaces/types";
+import { NextFunction, Request, Response } from "express";
 import { updateEventDetailsById } from "../models/updateEventDetailsById";
 
-export const patchEventDetailsById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const patchEventDetailsById = (request: Request, response: Response, next: NextFunction) => {
     const { event_id } = request.params;
     const { title, event_overview, description, start_time, end_time, timezone, venue_id, is_online, event_type, capacity, is_free, price, event_image_url, is_published } = request.body;
     updateEventDetailsById(event_id, title, event_overview, description, start_time, end_time, timezone, venue_id, is_online, event_type, capacity, is_free, price, event_image_url, is_published)
