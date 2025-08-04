@@ -16,10 +16,27 @@ export interface CustomResponse extends Response {
     eventTag: object;
 }
 
-export interface CustomRequest extends Request {
-    params: any;
-    query: any;
-    body: any;
+export interface IndividualEvent {
+    event_id: number;
+    title: string;
+    slug: string;
+    event_overview: string;
+    description: string;
+    start_time: string;
+    end_time: string;
+    timezone: string;
+    venue_id: number;
+    is_online: boolean;
+    host_id: number;
+    event_type: string;
+    capacity: number;
+    attendees_count: number;
+    is_free: boolean;
+    price: number;
+    event_image_url: string;
+    is_published: boolean;
+    created_at: string;
+    last_updated_at: string;
 }
 
 export interface CustomError extends Error {
