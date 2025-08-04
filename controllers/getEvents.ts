@@ -13,7 +13,7 @@ export const getEvents = (request: Request, response: Response, next: NextFuncti
         p?: number
     };
 
-    if (tag && typeof tag === "string") {
+    if (tag) {
         checkTagExists(tag).catch((error: Error) => {
             next(error);
         });
