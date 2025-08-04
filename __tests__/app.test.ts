@@ -1,4 +1,4 @@
-import { CustomResponse } from "../controllers/interfaces/types";
+import { IndividualEvent, CustomResponse } from "../controllers/interfaces/types";
 
 import request from "supertest";
 import { app } from "../db/app";
@@ -20,8 +20,9 @@ describe("GET /api", () => {
         return request(app)
         .get("/api")
         .expect(200)
-        .then(({ body: { endpoints } } : { body: CustomResponse }) => {
-            expect(endpoints).toEqual(endpointsJSON);
+        .then((response) => {
+            const { endpoints } = response.body as { endpoints: typeof endpointsJSON }
+            expect(endpoints).toEqual(endpointsJSON)
         });
     });
 });
@@ -31,7 +32,10 @@ describe("GET /api/events", () => {
         return request(app)
         .get("/api/events")
         .expect(200)
-        .then(({ body: { events } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { events } = response.body as {
+                events: IndividualEvent[]
+            }
             expect(Array.isArray(events)).toBe(true);
             expect(events.length).toBe(3);
             events.forEach((event) => {
@@ -65,29 +69,36 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?sort_by=price")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
-                    const output: Array<any> = events;
-                    expect(output[0].price).toBe(0.00);
-                    expect(output[1].price).toBe(0.00);
-                    expect(output[2].price).toBe(95.00);
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: IndividualEvent[]
+                    }
+                    expect(events[0].price).toBe(0.00);
+                    expect(events[1].price).toBe(0.00);
+                    expect(events[2].price).toBe(95.00);
                 });
             });
             test("200: responds with a sorted array of event objects by the default column ('start_time') when one is not specifically selected, as well as an appropriate status code", () => {
                 return request(app)
                 .get("/api/events")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
-                    const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(output[2].start_time).toBe("2025-10-18T09:00:00Z");
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: IndividualEvent[]
+                    }
+                    expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(events[2].start_time).toBe("2025-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when sorted by an invalid, non-existent column", () => {
                 return request(app)
                 .get("/api/events?sort_by=title")
                 .expect(400)
-                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { msg } = response.body as {
+                        msg: string
+                    }
                     expect(msg).toBe("Invalid 'Sort By' or 'Order' query.");
                 });
             });
@@ -97,29 +108,36 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?order=desc")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
-                    const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-10-18T09:00:00Z");
-                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(output[2].start_time).toBe("2025-08-20T10:00:00Z");
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: IndividualEvent[]
+                    }
+                    expect(events[0].start_time).toBe("2025-10-18T09:00:00Z");
+                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(events[2].start_time).toBe("2025-08-20T10:00:00Z");
                 });
             });
             test("200: responds with an ordered array of event objects by a default value ('asc') when one is not specifically selected, as well as an appropriate status code", () => {
                 return request(app)
                 .get("/api/events")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
-                    const output: Array<any> = events;
-                    expect(output[0].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(output[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(output[2].start_time).toBe("2025-10-18T09:00:00Z");
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: IndividualEvent[]
+                    }
+                    expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
+                    expect(events[2].start_time).toBe("2025-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when ordered by an invalid, non-existent value", () => {
                 return request(app)
                 .get("/api/events?order=high-to-low")
                 .expect(400)
-                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { msg } = response.body as {
+                        msg: string
+                    }
                     expect(msg).toBe("Invalid 'Sort By' or 'Order' query.");
                 });
             });
