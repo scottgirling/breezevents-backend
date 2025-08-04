@@ -1,8 +1,7 @@
-import { NextFunction } from "express";
-import { CustomRequest, CustomResponse } from "./interfaces/types";
+import { NextFunction, Request, Response } from "express";
 import { selectVenueById } from "../models/selectVenueById";
 
-export const getVenueById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const getVenueById = (request: Request, response: Response, next: NextFunction) => {
     const { venue_id } = request.params;
     selectVenueById(venue_id)
     .then((venue: object) => {

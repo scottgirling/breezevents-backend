@@ -1,8 +1,7 @@
-import { NextFunction } from "express";
-import { CustomRequest, CustomResponse } from "./interfaces/types";
+import { NextFunction, Request, Response } from "express";
 import { updateEventById } from "../models/updateEventById";
 
-export const patchEventById = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const patchEventById = (request: Request, response: Response, next: NextFunction) => {
     const { event_id } = request.params;
     const { attendeeCountChange } = request.body;
     updateEventById(attendeeCountChange, event_id)

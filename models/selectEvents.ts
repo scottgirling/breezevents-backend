@@ -1,6 +1,6 @@
 import db from "../db/connection";
 
-export const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag: string, is_online: string, is_free: string, limit: number = 12, p: number = 1) => {
+export const selectEvents = (sort_by: string = "start_time", order: string = "asc", tag: string | undefined, is_online: string | undefined, is_free: string | undefined, limit: number = 12, p: number = 1) => {
     const offset = (p - 1) * limit;
     const validSortBy = ["start_time", "price", "created_at"];
     const validOrder = ["asc", "desc"];

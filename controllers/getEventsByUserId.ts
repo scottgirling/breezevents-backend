@@ -1,8 +1,7 @@
-import { NextFunction } from "express";
-import { CustomRequest, CustomResponse } from "./interfaces/types";
+import { NextFunction, Request, Response } from "express";
 import { selectEventsByUserId } from "../models/selectEventsByUserId";
 
-export const getEventsByUserId = (request: CustomRequest, response: CustomResponse, next: NextFunction) => {
+export const getEventsByUserId = (request: Request, response: Response, next: NextFunction) => {
     const { user_id } = request.params;
     selectEventsByUserId(user_id)
     .then((events: Array<object>) => {
