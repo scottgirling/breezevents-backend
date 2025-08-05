@@ -1,10 +1,16 @@
-import { IndividualEvent, CustomResponse } from "../controllers/interfaces/types";
+import { EventAndHostAndVenue, HostEvent } from "../controllers/interfaces/types";
 
 import request from "supertest";
 import { app } from "../db/app";
 import connection from "../db/connection";
 import { seed } from "../db/seeds/seed";
 import * as testData from "../db/data/test-data/index";
+import { Tag } from "../db/data/test-data/tags";
+import { Venue } from "../db/data/test-data/venues";
+import { User } from "../db/data/test-data/users";
+import { UserEvent } from "../db/data/test-data/user_events";
+import { EventTag } from "../db/data/test-data/event_tags";
+import { SingleEvent } from "../db/data/test-data/events";
 const endpointsJSON = require(`${__dirname}/../../endpoints.json`);
 
 beforeEach(() => {
@@ -34,7 +40,7 @@ describe("GET /api/events", () => {
         .expect(200)
         .then((response) => {
             const { events } = response.body as {
-                events: IndividualEvent[]
+                events: SingleEvent[]
             }
             expect(Array.isArray(events)).toBe(true);
             expect(events.length).toBe(3);
@@ -71,7 +77,7 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then((response) => {
                     const { events } = response.body as {
-                        events: IndividualEvent[]
+                        events: SingleEvent[]
                     }
                     expect(events[0].price).toBe(0.00);
                     expect(events[1].price).toBe(0.00);
@@ -84,7 +90,7 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then((response) => {
                     const { events } = response.body as {
-                        events: IndividualEvent[]
+                        events: SingleEvent[]
                     }
                     expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
                     expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
@@ -110,7 +116,7 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then((response) => {
                     const { events } = response.body as {
-                        events: IndividualEvent[]
+                        events: SingleEvent[]
                     }
                     expect(events[0].start_time).toBe("2025-10-18T09:00:00Z");
                     expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
@@ -123,7 +129,7 @@ describe("GET /api/events", () => {
                 .expect(200)
                 .then((response) => {
                     const { events } = response.body as {
-                        events: IndividualEvent[]
+                        events: SingleEvent[]
                     }
                     expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
                     expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
@@ -148,7 +154,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=ai")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
                         expect(events.length).toBe(1);
                     });
                 });
@@ -156,7 +165,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=healthtech")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
                         expect(events.length).toBe(0);
                     });
                 });
@@ -164,7 +176,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=edtech")
                     .expect(404)
-                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { msg } = response.body as {
+                            msg: string
+                        }
                         expect(msg).toBe("Tag does not exist.");
                     });
                 });
@@ -174,10 +189,12 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?is_online=true")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
-                        const output: Array<any> = events;
-                        expect(output.length).toBe(1);
-                        output.forEach((event) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
+                        expect(events.length).toBe(1);
+                        events.forEach((event) => {
                             expect(event.is_online).toBe(true);
                         });
                     });
@@ -186,7 +203,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=technology&is_online=true")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
                         expect(events.length).toBe(1);
                     });
                 });
@@ -194,7 +214,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=innovation&is_online=maybe")
                     .expect(400)
-                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { msg } = response.body as {
+                            msg: string
+                        }
                         expect(msg).toBe("Invalid data type.");
                     });
                 });
@@ -204,10 +227,12 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?is_free=true")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
-                        const output: Array<any> = events;
-                        expect(output.length).toBe(2);
-                        output.forEach((event) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
+                        expect(events.length).toBe(2);
+                        events.forEach((event) => {
                             expect(event.is_free).toBe(true);
                         });
                     });
@@ -216,7 +241,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?tag=technology&is_online=true&is_free=true")
                     .expect(200)
-                    .then(({ body: { events } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { events } = response.body as {
+                            events: SingleEvent[]
+                        }
                         expect(events.length).toBe(1);
                     });
                 });
@@ -224,7 +252,10 @@ describe("GET /api/events", () => {
                     return request(app)
                     .get("/api/events?is_free=absolutely!")
                     .expect(400)
-                    .then(({ body: { msg } } : { body: CustomResponse }) => {
+                    .then((response) => {
+                        const { msg } = response.body as {
+                            msg: string
+                        }
                         expect(msg).toBe("Invalid data type.");
                     });
                 });
@@ -237,7 +268,10 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?limit=3")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: SingleEvent[]
+                    }
                     expect(events.length).toBe(3);
                 });
             });
@@ -245,7 +279,10 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: SingleEvent[]
+                    }
                     expect(events.length).toBe(3);
                 });
             });
@@ -253,7 +290,10 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?limit=three")
                 .expect(400)
-                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { msg } = response.body as {
+                        msg: string
+                    }
                     expect(msg).toBe("Invalid data type.");
                 });
             });
@@ -263,17 +303,22 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?sort_by=price&limit=2&p=2")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
-                    const output: Array<any> = events;
-                    expect(output.length).toBe(1);
-                    expect(output[0].price).toBe(95.00);
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: SingleEvent[]
+                    }
+                    expect(events.length).toBe(1);
+                    expect(events[0].price).toBe(95.00);
                 });
             });
             test("200: responds with an array of event objects according to a default 'p' value (1) when one is not specifically selected, as well as an appropriate status code", () => {
                 return request(app)
                 .get("/api/events?limit=3")
                 .expect(200)
-                .then(({ body: { events } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { events } = response.body as {
+                        events: SingleEvent[]
+                    }
                     expect(events.length).toBe(3);
                 });
             });
@@ -281,7 +326,10 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?p=seventeen")
                 .expect(400)
-                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { msg } = response.body as {
+                        msg: string
+                    }
                     expect(msg).toBe("Invalid data type.");
                 });
             });
@@ -289,7 +337,10 @@ describe("GET /api/events", () => {
                 return request(app)
                 .get("/api/events?tag=fintech&p=77")
                 .expect(404)
-                .then(({ body: { msg } } : { body: CustomResponse }) => {
+                .then((response) => {
+                    const { msg } = response.body as {
+                        msg: string
+                    }
                     expect(msg).toBe("Page does not exist.");
                 });
             });
@@ -302,7 +353,10 @@ describe("GET /api/events/:event_id", () => {
         return request(app)
         .get("/api/events/1")
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: EventAndHostAndVenue
+            }
             const expectedOutput = {
                 "event_id": 1,
                 "title": "UK Tech Expo 2025",
@@ -351,7 +405,10 @@ describe("GET /api/events/:event_id", () => {
         return request(app)
         .get("/api/events/10")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Event does not exist.");
         });
     });
@@ -359,7 +416,10 @@ describe("GET /api/events/:event_id", () => {
         return request(app)
         .get("/api/events/one")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -370,10 +430,12 @@ describe("GET /api/events/host/:user_id", () => {
         return request(app)
         .get("/api/events/host/9a7f3f42-39e9-4c8a-b3a1-f814e9c04c4d")
         .expect(200)
-        .then(({ body: { events } } : { body: CustomResponse }) => {
-            const output: Array<any> = events;
-            expect(output.length).toBe(2);
-            output.forEach((event) => {
+        .then((response) => {
+            const { events } = response.body as {
+                events: HostEvent[]
+            }
+            expect(events.length).toBe(2);
+            events.forEach((event) => {
                 expect(event.host).toBe("ahmedben96");
             });
         });
@@ -382,7 +444,10 @@ describe("GET /api/events/host/:user_id", () => {
         return request(app)
         .get("/api/events/host/45")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -390,7 +455,10 @@ describe("GET /api/events/host/:user_id", () => {
         return request(app)
         .get("/api/events/host/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Profile not found.");
         });
     });
@@ -401,7 +469,10 @@ describe("GET /api/tags", () => {
         return request(app)
         .get("/api/tags")
         .expect(200)
-        .then(({ body: { tags } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { tags } = response.body as {
+                tags: Tag[]
+            }
             expect(Array.isArray(tags)).toBe(true);
             expect(tags.length).toBe(7);
             tags.forEach((tag) => {
@@ -421,7 +492,10 @@ describe("GET /api/venues", () => {
         return request(app)
         .get("/api/venues")
         .expect(200)
-        .then(({ body: { venues } } : { body: CustomResponse}) => {
+        .then((response) => {
+            const { venues } = response.body as {
+                venues: Venue[]
+            }
             expect(Array.isArray(venues)).toBe(true);
             expect(venues.length).toBe(3);
             venues.forEach((venue) => {
@@ -452,7 +526,10 @@ describe("GET /api/venues/:venue_id", () => {
         return request(app)
         .get("/api/venues/1")
         .expect(200)
-        .then(({ body: { venue } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { venue } = response.body as {
+                venue: Venue
+            }
             const expectedOutput = {
                 "venue_id": 1,
                 "venue_name": "ExCeL London",
@@ -479,7 +556,10 @@ describe("GET /api/venues/:venue_id", () => {
         return request(app)
         .get("/api/venues/seven")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -487,7 +567,10 @@ describe("GET /api/venues/:venue_id", () => {
         return request(app)
         .get("/api/venues/34")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Venue not found.");
         });
     });
@@ -498,7 +581,10 @@ describe("GET /api/users/:user_id", () => {
         return request(app)
         .get("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .expect(200)
-        .then(({ body: { user } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { user } = response.body as {
+                user: User
+            }
             expect(user).toMatchObject({
                 "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Alice Thompson",
@@ -516,7 +602,10 @@ describe("GET /api/users/:user_id", () => {
         return request(app)
         .get("/api/users/scottgirling")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -524,7 +613,10 @@ describe("GET /api/users/:user_id", () => {
         return request(app)
         .get("/api/users/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("User does not exist.");
         });
     });
@@ -535,7 +627,10 @@ describe("GET /api/users/:user_id/events", () => {
         return request(app)
         .get("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479/events")
         .expect(200)
-        .then(({ body: { events } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { events } = response.body as {
+                events: SingleEvent[]
+            }
             expect(Array.isArray(events)).toBe(true);
             expect(events.length).toBe(3);
             events.forEach((event) => {
@@ -567,7 +662,10 @@ describe("GET /api/users/:user_id/events", () => {
         return request(app)
         .get("/api/users/8e8f0b79-f8c9-4ca1-8e1a-15c3a8c5d57a/events")
         .expect(200)
-        .then(({ body: { events } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { events } = response.body as {
+                events: SingleEvent[]
+            }
             expect(events.length).toBe(0);
         });
     });
@@ -575,7 +673,10 @@ describe("GET /api/users/:user_id/events", () => {
         return request(app)
         .get("/api/users/scottgirling/events")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -583,7 +684,10 @@ describe("GET /api/users/:user_id/events", () => {
         return request(app)
         .get("/api/users/9a7f3f42-39e9-4c8a-84e7-f814e9c04c4d/events")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Profile not found.");
         });
     });
@@ -595,7 +699,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/1")
         .send({ attendeeCountChange: 1 })
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             const expectedOutput = {
                 "event_id": 1,
                 "title": "UK Tech Expo 2025",
@@ -627,7 +734,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/1")
         .send({ attendeeCountChange: -1 })
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             const expectedOutput = {
                 "event_id": 1,
                 "title": "UK Tech Expo 2025",
@@ -659,7 +769,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/1")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -668,7 +781,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/1")
         .send({ attendeeCountChange: "one" })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -677,7 +793,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/one")
         .send({ attendeeCountChange: 1 })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -686,7 +805,10 @@ describe("PATCH /api/events/:event_id", () => {
         .patch("/api/events/33")
         .send({ attendeeCountChange: 1 })
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Profile not found.");
         });
     });
@@ -698,7 +820,10 @@ describe("PATCH /api/events/update/:event_id", () => {
         .patch("/api/events/update/1")
         .send({ venue_id: 2 })
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             const expectedOutput = {
                 "event_id": 1,
                 "title": "UK Tech Expo 2025",
@@ -734,7 +859,10 @@ describe("PATCH /api/events/update/:event_id", () => {
             "price": 99.00
         })
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             const expectedOutput = {
                 "event_id": 1,
                 "title": "UK Technology Expo 2025",
@@ -780,7 +908,10 @@ describe("PATCH /api/events/update/:event_id", () => {
             "is_published": true,
         })
         .expect(200)
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             const expectedOutput = {
                 "event_id": 3,
                 "title": "AgriTech Innovation Forum 2025",
@@ -811,7 +942,10 @@ describe("PATCH /api/events/update/:event_id", () => {
         .patch("/api/events/update/1")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -822,7 +956,10 @@ describe("PATCH /api/events/update/:event_id", () => {
             "capacity": "one thousand"
         })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -831,7 +968,10 @@ describe("PATCH /api/events/update/:event_id", () => {
         .patch("/api/events/update/three")
         .send({ "is_published": true })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -840,7 +980,10 @@ describe("PATCH /api/events/update/:event_id", () => {
         .patch("/api/events/update/45")
         .send({ "capacity": 1234 })
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Event not found.");
         });
     });
@@ -854,7 +997,10 @@ describe("PATCH /api/users/:user_id", () => {
             "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
         })
         .expect(200)
-        .then(({ body: { user } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { user } = response.body as {
+                user: User
+            }
             const expectedOutput = {
                 "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Alice Thompson",
@@ -880,7 +1026,10 @@ describe("PATCH /api/users/:user_id", () => {
             "avatar_url": "https://example.com/avatars/scott.jpg"
         })
         .expect(200)
-        .then(({ body: { user } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { user } = response.body as {
+                user: User
+            }
             const expectedOutput = {
                 "user_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
                 "name": "Scott Girling",
@@ -900,7 +1049,10 @@ describe("PATCH /api/users/:user_id", () => {
         .patch("/api/users/f47ac10b-58cc-4372-a567-0e02b2c3d479")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -911,7 +1063,10 @@ describe("PATCH /api/users/:user_id", () => {
             "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
         })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -922,7 +1077,10 @@ describe("PATCH /api/users/:user_id", () => {
             "bio": "I LOVE TECH! Always looking to meet cool tech peeps!"
         })
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Profile not found.");
         });
     });
@@ -938,7 +1096,10 @@ describe("DELETE /api/events/:event_id", () => {
         return request(app)
         .delete("/api/events/one")
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -946,7 +1107,10 @@ describe("DELETE /api/events/:event_id", () => {
         return request(app)
         .delete("/api/events/101")
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Event not found.");
         });
     });
@@ -958,7 +1122,10 @@ describe("POST /api/user_events", () => {
         .post("/api/user_events")
         .send({ user_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", event_id: 4 })
         .expect(201)
-        .then(({ body: { userEvent } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { userEvent } = response.body as {
+                userEvent: UserEvent
+            }
             expect(userEvent).toHaveProperty("user_id", "f47ac10b-58cc-4372-a567-0e02b2c3d479")
             expect(userEvent).toHaveProperty("event_id", 4);
         });
@@ -968,7 +1135,10 @@ describe("POST /api/user_events", () => {
         .post("/api/user_events")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -977,7 +1147,10 @@ describe("POST /api/user_events", () => {
         .post("/api/user_events")
         .send({ user_id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", event_id: 44 })
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - one or more ID not found.");
         });
     });
@@ -989,7 +1162,10 @@ describe("POST /api/event_tags", () => {
         .post("/api/event_tags")
         .send({ event_id: 1, tag_id: 3 })
         .expect(201)
-        .then(({ body: { eventTag } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { eventTag } = response.body as {
+                eventTag: EventTag
+            }
             expect(eventTag).toHaveProperty("event_id", 1);
             expect(eventTag).toHaveProperty("tag_id", 3);
         });
@@ -999,7 +1175,10 @@ describe("POST /api/event_tags", () => {
         .post("/api/event_tags")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -1008,7 +1187,10 @@ describe("POST /api/event_tags", () => {
         .post("/api/event_tags")
         .send({ event_id: 1, tag_id: 15 })
         .expect(404)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - one or more ID not found.");
         });
     });
@@ -1036,7 +1218,10 @@ describe("POST /api/events", () => {
             "event_image_url": "https://example.co.uk/images/agritechforum2025.jpg",
             "is_published": true,
         })
-        .then(({ body: { event } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { event } = response.body as {
+                event: SingleEvent
+            }
             expect(event).toHaveProperty("event_id", 6);
             expect(event).toHaveProperty("title", "AgriTech Innovation Forum 2025");
             expect(event).toHaveProperty("slug", "agritech-innovation-forum-2025");
@@ -1075,7 +1260,10 @@ describe("POST /api/events", () => {
             "is_published": true
         })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });
@@ -1101,7 +1289,10 @@ describe("POST /api/events", () => {
             "is_published": true,
         })
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid data type.");
         });
     });
@@ -1120,7 +1311,10 @@ describe("POST /api/users", () => {
             "role": "attendee"
         })
         .expect(201)
-        .then(({ body: { user } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { user } = response.body as {
+                user: User
+            }
             expect(user).toHaveProperty("user_id", "9a7f3f42-39e9-4c8a-b3a1-f814e9c04c49");
             expect(user).toHaveProperty("name", "Scott Girling");
             expect(user).toHaveProperty("username", "scottgirling123");
@@ -1138,7 +1332,10 @@ describe("POST /api/users", () => {
         .post("/api/users")
         .send({})
         .expect(400)
-        .then(({ body: { msg } } : { body: CustomResponse }) => {
+        .then((response) => {
+            const { msg } = response.body as {
+                msg: string
+            }
             expect(msg).toBe("Invalid request - missing field(s).");
         });
     });

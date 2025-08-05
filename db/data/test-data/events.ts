@@ -1,4 +1,5 @@
 export interface SingleEvent {
+  event_id?: number;
   title: string;
   slug: string;
   event_overview: string;
