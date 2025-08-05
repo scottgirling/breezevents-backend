@@ -1,4 +1,5 @@
 export interface Venue {
+  venue_id?: number;
   venue_name: string;
   venue_type: string;
   location: string;
