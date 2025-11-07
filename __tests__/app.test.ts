@@ -80,8 +80,8 @@ describe("GET /api/events", () => {
                         events: SingleEvent[]
                     }
                     expect(events[0].price).toBe(0.00);
-                    expect(events[1].price).toBe(0.00);
-                    expect(events[2].price).toBe(95.00);
+                    expect(events[1].price).toBe(95.00);
+                    expect(events[2].price).toBe(180.00);
                 });
             });
             test("200: responds with a sorted array of event objects by the default column ('start_time') when one is not specifically selected, as well as an appropriate status code", () => {
@@ -92,9 +92,9 @@ describe("GET /api/events", () => {
                     const { events } = response.body as {
                         events: SingleEvent[]
                     }
-                    expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(events[2].start_time).toBe("2025-10-18T09:00:00Z");
+                    expect(events[0].start_time).toBe("2026-05-14T09:00:00Z");
+                    expect(events[1].start_time).toBe("2026-08-20T10:00:00Z");
+                    expect(events[2].start_time).toBe("2026-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when sorted by an invalid, non-existent column", () => {
@@ -118,9 +118,9 @@ describe("GET /api/events", () => {
                     const { events } = response.body as {
                         events: SingleEvent[]
                     }
-                    expect(events[0].start_time).toBe("2025-10-18T09:00:00Z");
-                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(events[2].start_time).toBe("2025-08-20T10:00:00Z");
+                    expect(events[0].start_time).toBe("2026-10-18T09:00:00Z");
+                    expect(events[1].start_time).toBe("2026-08-20T10:00:00Z");
+                    expect(events[2].start_time).toBe("2026-05-14T09:00:00Z");
                 });
             });
             test("200: responds with an ordered array of event objects by a default value ('asc') when one is not specifically selected, as well as an appropriate status code", () => {
@@ -131,9 +131,9 @@ describe("GET /api/events", () => {
                     const { events } = response.body as {
                         events: SingleEvent[]
                     }
-                    expect(events[0].start_time).toBe("2025-08-20T10:00:00Z");
-                    expect(events[1].start_time).toBe("2025-09-12T09:30:00Z");
-                    expect(events[2].start_time).toBe("2025-10-18T09:00:00Z");
+                    expect(events[0].start_time).toBe("2026-05-14T09:00:00Z");
+                    expect(events[1].start_time).toBe("2026-08-20T10:00:00Z");
+                    expect(events[2].start_time).toBe("2026-10-18T09:00:00Z");
                 });
             });
             test("400: responds with an appropriate status code and error message when ordered by an invalid, non-existent value", () => {
@@ -158,7 +158,7 @@ describe("GET /api/events", () => {
                         const { events } = response.body as {
                             events: SingleEvent[]
                         }
-                        expect(events.length).toBe(1);
+                        expect(events.length).toBe(2);
                     });
                 });
                 test("200: responds with an empty array and an appropriate status code when passed a valid 'tag' query but not events currently exist on it", () => {
@@ -231,7 +231,7 @@ describe("GET /api/events", () => {
                         const { events } = response.body as {
                             events: SingleEvent[]
                         }
-                        expect(events.length).toBe(2);
+                        expect(events.length).toBe(1);
                         events.forEach((event) => {
                             expect(event.is_free).toBe(true);
                         });
@@ -308,7 +308,7 @@ describe("GET /api/events", () => {
                         events: SingleEvent[]
                     }
                     expect(events.length).toBe(1);
-                    expect(events[0].price).toBe(95.00);
+                    expect(events[0].price).toBe(180.00);
                 });
             });
             test("200: responds with an array of event objects according to a default 'p' value (1) when one is not specifically selected, as well as an appropriate status code", () => {
@@ -363,8 +363,8 @@ describe("GET /api/events/:event_id", () => {
                 "slug": "uk-tech-expo-2025",
                 "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
                 "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
-                "start_time": "2025-05-14T09:00:00Z",
-                "end_time": "2025-05-16T17:00:00Z",
+                "start_time": "2026-05-14T09:00:00Z",
+                "end_time": "2026-05-16T17:00:00Z",
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
@@ -709,8 +709,8 @@ describe("PATCH /api/events/:event_id", () => {
                 "slug": "uk-tech-expo-2025",
                 "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
                 "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
-                "start_time": "2025-05-14T09:00:00Z",
-                "end_time": "2025-05-16T17:00:00Z",
+                "start_time": "2026-05-14T09:00:00Z",
+                "end_time": "2026-05-16T17:00:00Z",
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
@@ -744,8 +744,8 @@ describe("PATCH /api/events/:event_id", () => {
                 "slug": "uk-tech-expo-2025",
                 "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
                 "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
-                "start_time": "2025-05-14T09:00:00Z",
-                "end_time": "2025-05-16T17:00:00Z",
+                "start_time": "2026-05-14T09:00:00Z",
+                "end_time": "2026-05-16T17:00:00Z",
                 "timezone": "Europe/London",
                 "venue_id": 1,
                 "is_online": false,
@@ -830,8 +830,8 @@ describe("PATCH /api/events/update/:event_id", () => {
                 "slug": "uk-tech-expo-2025",
                 "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the UK.",
                 "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
-                "start_time": "2025-05-14T09:00:00Z",
-                "end_time": "2025-05-16T17:00:00Z",
+                "start_time": "2026-05-14T09:00:00Z",
+                "end_time": "2026-05-16T17:00:00Z",
                 "timezone": "Europe/London",
                 "venue_id": 2,
                 "is_online": false,
@@ -869,8 +869,8 @@ describe("PATCH /api/events/update/:event_id", () => {
                 "slug": "uk-technology-expo-2025",
                 "event_overview": "A 3-day expo showcasing emerging technologies and innovation from across the United Kingdom.",
                 "description": "Join thousands of innovators, developers, entrepreneurs, and tech enthusiasts at the UK Tech Expo 2025 — the country's leading event for showcasing breakthrough technologies, digital transformation, and the future of industry. Over three days, explore more than 150 exhibitors, attend keynote sessions by global tech leaders, and participate in hands-on workshops designed to empower the next generation of digital talent. Whether you're interested in AI, sustainability, fintech, or cybersecurity, this event offers insights, networking, and inspiration for everyone in the tech ecosystem.",
-                "start_time": "2025-05-14T09:00:00Z",
-                "end_time": "2025-05-16T17:00:00Z",
+                "start_time": "2026-05-14T09:00:00Z",
+                "end_time": "2026-05-16T17:00:00Z",
                 "timezone": "Europe/London",
                 "venue_id": 2,
                 "is_online": false,
